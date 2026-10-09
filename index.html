@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>វិញ្ញាសាចំណេះដឹងទូទៅ និងវប្បធម៌ទូទៅភាគ២</title>
+    <link rel="stylesheet" href="វប្បធម៌ទូទៅ1.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&family=Khmer&display=swap"
+        rel="stylesheet">
+</head>
+<style>
+    body {
+    font-family: 'Kantumruy Pro', 'Khmer', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.quiz-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 750px;
+    width: 100%;
+}
+
+h1 {
+    color: #1a73e8;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 1.6rem;
+}
+
+h2 {
+    color: #5f6368;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #5f6368;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.timer-box {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+}
+
+.timer-box.danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.section-title {
+    background-color: #e8f0fe;
+    color: #1a73e8;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    border-left: 5px solid #1a73e8;
+}
+
+.question-block {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.question-title {
+    font-weight: bold;
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.options label {
+    display: block;
+    padding: 12px;
+    background-color: #f8f9fa;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid transparent;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.options label:hover {
+    background-color: #e8f0fe;
+}
+
+.options input {
+    margin-right: 10px;
+}
+
+.options label.correct {
+    background-color: #d4edda !important;
+    border-color: #28a745;
+    color: #155724;
+    font-weight: bold;
+}
+
+.options label.incorrect {
+    background-color: #f8d7da !important;
+    border-color: #dc3545;
+    color: #721c24;
+}
+
+button {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #1557b0;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#result {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    display: none;
+    background-color: #e2e3e5;
+    color: #383d41;
+    line-height: 1.6;
+}
+
+.explanation {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #edf4fe;
+    border-left: 4px solid #1a73e8;
+    border-radius: 4px;
+    color: #202124;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+</style>
+
+<body>
+
+    <div class="quiz-container">
+        <h1>វិញ្ញាសាចំណេះដឹងទូទៅ និងវប្បធម៌ទូទៅ</h1>
+        <h2>កម្រងសំណួរជ្រើសរើស (១១១ សំណួរ) សម្រាប់ប្រឡងគ្រូបង្រៀនភាគ២</h2>
+        <h3>រៀបរៀងដោយ៖ ហួច សេងហុង</h3>
+
+        <div id="timer" class="timer-box">ពេលវេលានៅសល់៖ 45:00</div>
+
+        <form id="quizForm">
+
+            <div class="question-block">
+                <div class="question-title">១. ព្រែកជីកហ្វូណនតេជោ មានប្រវែង ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="A"> A. ប្រមាណ ១៥០ គីឡូម៉ែត្រ</label>
+                    <label><input type="radio" name="q1" value="B"> B. ប្រមាណ ១៨០ គីឡូម៉ែត្រ</label>
+                    <label><input type="radio" name="q1" value="C"> C. ប្រមាណ ២០០ គីឡូម៉ែត្រ</label>
+                </div>
+                <div class="explanation" id="exp-q1"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">២. ព្រែកជីកហ្វូណនតេជោ គ្រោងចំណាយថវិកាសរុបប្រមាណ ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="A"> A. ១ ៥០០ លានដុល្លារអាមេរិក</label>
+                    <label><input type="radio" name="q2" value="B"> B. ១ ៧០០ លានដុល្លារអាមេរិក</label>
+                    <label><input type="radio" name="q2" value="C"> C. ២ ០០០ លានដុល្លារអាមេរិក</label>
+                </div>
+                <div class="explanation" id="exp-q2"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៣. ព្រែកជីកហ្វូណនតេជោ មានទីតាំង ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="A"> A. ចាប់ពីព្រែកតាកែវ ឆ្លងកាត់ព្រែកតាឯក
+                        ចូលតាមព្រែកតាហ៊ីង
+                        និងបន្តរហូតដល់សមុទ្រខេត្តកែប</label>
+                    <label><input type="radio" name="q3" value="B"> B. ចាប់ពីកំពង់ផែភ្នំពេញ ទៅខេត្តព្រះសីហនុ</label>
+                    <label><input type="radio" name="q3" value="C"> C. ចាប់ពីទន្លេមេគង្គ ទៅខេត្តកោះកុង</label>
+                </div>
+                <div class="explanation" id="exp-q3"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៤. ព្រែកជីកហ្វូណនតេជោ ឆ្លងកាត់ខេត្តចំនួន ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="A"> A. ៣ ខេត្ត</label>
+                    <label><input type="radio" name="q4" value="B"> B. ៤ ខេត្ត</label>
+                    <label><input type="radio" name="q4" value="C"> C. ៥ ខេត្ត</label>
+                </div>
+                <div class="explanation" id="exp-q4"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៥. តាមការប៉ាន់ស្មានប្រជាជនដែលរស់នៅអមសងខាងទទួលផលពីព្រែកជីកហ្វូណនតេជោ ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="A"> A. ប្រមាណ ១លាននាក់</label>
+                    <label><input type="radio" name="q5" value="B"> B. ប្រមាណ ១លាន៦សែននាក់</label>
+                    <label><input type="radio" name="q5" value="C"> C. ប្រមាណ ២លាននាក់</label>
+                </div>
+                <div class="explanation" id="exp-q5"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៦. ព្រែកជីកហ្វូណនតេជោ មានទំហំ ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="A"> A. ទទឹងខាងលើ ១០០ម៉ែត្រ ទទឹងខាងក្រោម ៨០ម៉ែត្រ
+                        និងជម្រៅ
+                        ៥,៤ម៉ែត្រ</label>
+                    <label><input type="radio" name="q6" value="B"> B. ទទឹងខាងលើ ៥០ម៉ែត្រ ទទឹងខាងក្រោម ៤០ម៉ែត្រ និងជម្រៅ
+                        ៣ម៉ែត្រ</label>
+                    <label><input type="radio" name="q6" value="C"> C. ទទឹងខាងលើ ១២០ម៉ែត្រ ទទឹងខាងក្រោម ៩០ម៉ែត្រ
+                        និងជម្រៅ
+                        ៦ម៉ែត្រ</label>
+                </div>
+                <div class="explanation" id="exp-q6"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៧. ចំពោះហេដ្ឋារចនាសម្ព័ន្ធ នៃព្រែកជីកហ្វូណនតេជោ មានដូចជា ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="A"> A. សន្ទះផ្លូវនាវាចរណ៍ ០៣កន្លែង, ស្ពាន ១១កន្លែង,
+                        ផ្លូវអមសងខាងសរុបប្រមាណ ២០៨គីឡូម៉ែត្រ</label>
+                    <label><input type="radio" name="q7" value="B"> B. សន្ទះផ្លូវនាវាចរណ៍ ០២កន្លែង, ស្ពាន ៥កន្លែង,
+                        ផ្លូវអមសងខាង
+                        ១៥០គីឡូម៉ែត្រ</label>
+                    <label><input type="radio" name="q7" value="C"> C. សន្ទះផ្លូវនាវាចរណ៍ ០៤កន្លែង, ស្ពាន ២០កន្លែង,
+                        ផ្លូវអមសងខាង
+                        ៣០០គីឡូម៉ែត្រ</label>
+                </div>
+                <div class="explanation" id="exp-q7"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៨. ព្រែកជីកហ្វូណនតេជោ គ្រោងសាងសង់ដោយប្រើរយៈពេលចំនួន ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="A"> A. ៣ ឆ្នាំ</label>
+                    <label><input type="radio" name="q8" value="B"> B. ៤ ឆ្នាំ</label>
+                    <label><input type="radio" name="q8" value="C"> C. ៥ ឆ្នាំ</label>
+                </div>
+                <div class="explanation" id="exp-q8"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៩. ព្រែកជីកហ្វូណនតេជោ គ្រោងសាងសង់នៅ ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="A"> A. ដើមឆ្នាំ២០២៤</label>
+                    <label><input type="radio" name="q9" value="B"> B. ចុងឆ្នាំ២០២៤</label>
+                    <label><input type="radio" name="q9" value="C"> C. ដើមឆ្នាំ២០២៥</label>
+                </div>
+                <div class="explanation" id="exp-q9"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">១០. ព្រែកជីកហ្វូណនតេជោ មានអត្ថប្រយោជន៍ដូចជា ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="A"> A. កាត់បន្ថយរយៈពេល ចម្ងាយ និងតម្លៃនៃការដឹកជញ្ជូន
+                        បង្កើតតំបន់ពាណិជ្ជកម្ម និងកសិកម្ម...</label>
+                    <label><input type="radio" name="q10" value="B"> B.
+                        ជួយតែកាត់បន្ថយជំនន់ទឹកភ្លៀងនៅតាមខេត្តមួយចំនួនប៉ុណ្ណោះ</label>
+                    <label><input type="radio" name="q10" value="C"> C. សម្រាប់តែការចិញ្ចឹមត្រី
+                        និងវារីវប្បកម្មខ្នាតតូច</label>
+                </div>
+                <div class="explanation" id="exp-q10"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">១១.
+                    តើការបោះឆ្នោតដែលរៀបចំឡើងដោយអាជ្ញាធរអន្តរកាលសហប្រជាជាតិនៅកម្ពុជា(អ៊ុនតាក់)ប្រព្រឹត្តិទៅនៅពេលណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q11" value="A"> A. ថ្ងៃទី ២៣ ដល់ ថ្ងៃទី ២៨ ខែសីហា ឆ្នាំ
+                        ១៩៩៣</label>
+                    <label><input type="radio" name="q11" value="B"> B. ថ្ងៃទី ២៣ ដល់ ថ្ងៃទី ២៨ ខែឧសភា ឆ្នាំ
+                        ១៩៩៣</label>
+                    <label><input type="radio" name="q11" value="C"> C. ថ្ងៃទី ២៣ ដល់ ថ្ងៃទី ២៨ ខែកញ្ញា ឆ្នាំ
+                        ១៩៩៣</label>
+                </div>
+                <div class="explanation" id="exp-q11"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">១២. បើគិតចាប់ពីឆ្នាំ១៩៩៣មកដល់បច្ចុប្បន្ននេះ
+                    តើកម្ពុជាធ្លាប់បោះឆ្នោតជ្រើសតាំងដំណាងរាស្ត្រចំនួនប៉ុន្មានដង?</div>
+                <div class="options">
+                    <label><input type="radio" name="q12" value="A"> A. ៥ ដង</label>
+                    <label><input type="radio" name="q12" value="B"> B. ៦ ដង</label>
+                    <label><input type="radio" name="q12" value="C"> C. ៧ ដង</label>
+                </div>
+                <div class="explanation" id="exp-q12"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">១៣. តើការបោះឆ្នោតជ្រើសតាំងតំណាងរាស្ត្រនីតិកាលទី៧ ប្រព្រឹត្តិទៅនៅពេលណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q13" value="A"> A. នៅថ្ងៃអាទិត្យ ទី២៣ ខែកក្កដា ឆ្នាំ២០២៣</label>
+                    <label><input type="radio" name="q13" value="B"> B. នៅថ្ងៃអាទិត្យ ទី២៣ ខែសីហា ឆ្នាំ២០២៣</label>
+                    <label><input type="radio" name="q13" value="C"> C. នៅថ្ងៃអាទិត្យ ទី២៣ ខែកញ្ញា ឆ្នាំ២០២៣</label>
+                </div>
+                <div class="explanation" id="exp-q13"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">១៤. តើការបោះឆ្នោតជ្រើសតាំងតំណាងរាស្ត្រប្រព្រឹត្តិទៅរៀងរាល់ប៉ុន្មានឆ្នាំម្តង?
+                </div>
+                <div class="options">
+                    <label><input type="radio" name="q14" value="A"> A. ៤ ឆ្នាំម្តង</label>
+                    <label><input type="radio" name="q14" value="B"> B. ៥ ឆ្នាំម្តង</label>
+                    <label><input type="radio" name="q14" value="C"> C. ៦ ឆ្នាំម្តង</label>
+                </div>
+                <div class="explanation" id="exp-q14"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">១៥. តើការបោះឆ្នោតក្រុមប្រឹក្សាឃុំសង្កាត់អាណត្តិទី៥ ឆ្នាំ២០២២
+                    ប្រព្រឹត្តិទៅនៅពេលណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q15" value="A"> A. ថ្ងៃទី៥ ខែមិថុនា ឆ្នាំ២០២២</label>
+                    <label><input type="radio" name="q15" value="B"> B. ថ្ងៃទី៥ ខែកក្កដា ឆ្នាំ២០២២</label>
+                    <label><input type="radio" name="q15" value="C"> C. ថ្ងៃទី៥ ខែសីហា ឆ្នាំ២០២២</label>
+                </div>
+                <div class="explanation" id="exp-q15"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">១៦.
+                    តើការបោះឆ្នោតក្រុមប្រឹក្សាឃុំសង្កាត់ប្រព្រឹត្តិទៅរៀងរាល់ប៉ុន្មានឆ្នាំម្តង?</div>
+                <div class="options">
+                    <label><input type="radio" name="q16" value="A"> A. ៣ ឆ្នាំម្តង</label>
+                    <label><input type="radio" name="q16" value="B"> B. ៤ ឆ្នាំម្តង</label>
+                    <label><input type="radio" name="q16" value="C"> C. ៥ ឆ្នាំម្តង</label>
+                </div>
+                <div class="explanation" id="exp-q16"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">១៧. តើប្រជាពលរដ្ឋអាយុចាប់ពីប៉ុន្មានឆ្នាំឡើង ទើបមានសិទ្ធិបោះឆ្នោត?</div>
+                <div class="options">
+                    <label><input type="radio" name="q17" value="A"> A. ១៦ ឆ្នាំឡើង</label>
+                    <label><input type="radio" name="q17" value="B"> B. ១៨ ឆ្នាំឡើង</label>
+                    <label><input type="radio" name="q17" value="C"> C. ២០ ឆ្នាំឡើង</label>
+                </div>
+                <div class="explanation" id="exp-q17"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">១៨. អ្នកអាចឈរឈ្មោះឱ្យគេបោះឆ្នោតជ្រើសតាំងជាតំណាងរាស្ត្រ ក្រុមប្រឹក្សារាធានី
+                    ខេត្ត ក្រុង
+                    ស្រុក ខណ្ឌ ឃុំ សង្កាត់បាន លុះត្រាមានអាយុចាប់ពី ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q18" value="A"> A. ២០ ឆ្នាំឡើង</label>
+                    <label><input type="radio" name="q18" value="B"> B. ២៥ ឆ្នាំឡើង</label>
+                    <label><input type="radio" name="q18" value="C"> C. ៣០ ឆ្នាំឡើង</label>
+                </div>
+                <div class="explanation" id="exp-q18"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">១៩. អ្នកអាចឈរឈ្មោះឱ្យគេបោះឆ្នោតជ្រើសតាំងជាសមាជិកព្រឹទ្ធសភា
+                    លុះត្រាមានអាយុចាប់ពី ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q19" value="A"> A. ៣៥ ឆ្នាំឡើង</label>
+                    <label><input type="radio" name="q19" value="B"> B. ៤៥ ឆ្នាំឡើង</label>
+                    <label><input type="radio" name="q19" value="C"> C. ៤០ ឆ្នាំឡើង</label>
+                </div>
+                <div class="explanation" id="exp-q19"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">២០. តើការបោះឆ្នោតនៅកម្ពុជាចែកជាប៉ុន្មានប្រភេទ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q20" value="A"> A. ៣ ប្រភេទ</label>
+                    <label><input type="radio" name="q20" value="B"> B. ៤ ប្រភេទ</label>
+                    <label><input type="radio" name="q20" value="C"> C. ៥ ប្រភេទ</label>
+                </div>
+                <div class="explanation" id="exp-q20"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">២១. តើការបោះឆ្នោតនៅកម្ពុជាចែកជាប៉ុន្មានលក្ខណៈ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q21" value="A"> A. ចែកជា ២ លក្ខណៈ (លក្ខណៈសកល និងលក្ខណៈអសកល)</label>
+                    <label><input type="radio" name="q21" value="B"> B. ចែកជា ៣ លក្ខណៈ</label>
+                    <label><input type="radio" name="q21" value="C"> C. ចែកជា ៤ លក្ខណៈ</label>
+                </div>
+                <div class="explanation" id="exp-q21"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">២២. ការបោះឆ្នោតជាសកលមានន័យថា ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q22" value="A"> A.
+                        គឺជាដំណើរការបោះឆ្នោតដែលប្រជាពលរដ្ឋគ្រប់រូបចាប់ពីអាយុ ១៨
+                        ឆ្នាំឡើងទៅ មានសិទ្ធិចូលរួម</label>
+                    <label><input type="radio" name="q22" value="B"> B.
+                        គឺជាដំណើរការបោះឆ្នោតដែលអនុញ្ញាតឱ្យតែមន្ត្រីរាជការចូលរួមប៉ុណ្ណោះ</label>
+                    <label><input type="radio" name="q22" value="C"> C.
+                        គឺជាដំណើរការបោះឆ្នោតដែលតំណាងរាស្ត្រជាអ្នកបោះឆ្នោតជំនួស</label>
+                </div>
+                <div class="explanation" id="exp-q22"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">២៣. ការបោះឆ្នោតអសកលមានន័យថា ៖</div>
+                <div class="options">
+                    <label><input type="radio" name="q23" value="A"> A.
+                        គឺជាដំណើរការបោះឆ្នោតដែលប្រជាពលរដ្ឋទូទៅមិនអាចចូលរួមផ្ទាល់បានទេ
+                        គឺចូលរួមបានតែតំណាងដែលគេបានកំណត់</label>
+                    <label><input type="radio" name="q23" value="B"> B.
+                        គឺជាដំណើរការបោះឆ្នោតដែលប្រជាពលរដ្ឋគ្រប់រូបមានសិទ្ធិចូលរួមស្មើៗគ្នា</label>
+                    <label><input type="radio" name="q23" value="C"> C.
+                        គឺជាដំណើរការបោះឆ្នោតសាកល្បងនៅតាមបណ្តាខេត្ត</label>
+                </div>
+                <div class="explanation" id="exp-q23"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">២៤. តើខេត្តណាធំជាងគេក្នុងប្រទេសកម្ពុជា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q24" value="A"> A. ខេត្តមណ្ឌលគិរី</label>
+                    <label><input type="radio" name="q24" value="B"> B. ខេត្តសៀមរាប</label>
+                    <label><input type="radio" name="q24" value="C"> C. ខេត្តកោះកុង</label>
+                </div>
+                <div class="explanation" id="exp-q24"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">២៥. តើខេត្តណាតូចជាងគេក្នុងប្រទេសកម្ពុជា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q25" value="A"> A. ខេត្តប៉ៃលិន</label>
+                    <label><input type="radio" name="q25" value="B"> B. ខេត្តកែប</label>
+                    <label><input type="radio" name="q25" value="C"> C. ខេត្តព្រះសីហនុ</label>
+                </div>
+                <div class="explanation" id="exp-q25"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">២៦. តើខេត្តណាស្ថិតនៅចំកណ្តាលប្រទេសកម្ពុជា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q26" value="A"> A. ខេត្តកំពង់ធំ</label>
+                    <label><input type="radio" name="q26" value="B"> B. ខេត្តកំពង់ឆ្នាំង</label>
+                    <label><input type="radio" name="q26" value="C"> C. ខេត្តកំពង់ចាម</label>
+                </div>
+                <div class="explanation" id="exp-q26"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">២៧. តើខេត្តណាមានប្រាសាទច្រើនជាងគេក្នុងប្រទេសកម្ពុជា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q27" value="A"> A. ខេត្តព្រះវិហារ</label>
+                    <label><input type="radio" name="q27" value="B"> B. ខេត្តសៀមរាប</label>
+                    <label><input type="radio" name="q27" value="C"> C. ខេត្តកំពង់ធំ</label>
+                </div>
+                <div class="explanation" id="exp-q27"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">២៨. តើខេត្តណាដែលមានក្រុងចំនួន ៣ ក្នុងប្រទេសកម្ពុជា (គិតត្រឹមឆ្នាំ២០២៤)?
+                </div>
+                <div class="options">
+                    <label><input type="radio" name="q28" value="A"> A. ខេត្តបាត់ដំបង</label>
+                    <label><input type="radio" name="q28" value="B"> B. ខេត្តសៀមរាប</label>
+                    <label><input type="radio" name="q28" value="C"> C. ខេត្តកណ្តាល (ក្រុងតាខ្មៅ, ក្រុងអរិយក្សត្រ,
+                        ក្រុងសំពៅពូន)</label>
+                </div>
+                <div class="explanation" id="exp-q28"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">២៩. តើខេត្តណាខ្លះដែលមានព្រំប្រទល់ជាប់នឹងបឹងទន្លេសាប?</div>
+                <div class="options">
+                    <label><input type="radio" name="q29" value="A"> A. ពោធិ៍សាត់ សៀមរាប បាត់ដំបង កំពង់ឆ្នាំង
+                        កំពង់ធំ</label>
+                    <label><input type="radio" name="q29" value="B"> B. បាត់ដំបង បន្ទាយមានជ័យ សៀមរាប ឧត្តរមានជ័យ
+                        ព្រះវិហារ</label>
+                    <label><input type="radio" name="q29" value="C"> C. ពោធិ៍សាត់ កំពង់ឆ្នាំង កំពង់ធំ ភ្នំពេញ
+                        កណ្តាល</label>
+                </div>
+                <div class="explanation" id="exp-q29"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៣០. តើរាជធានី-ខេត្តណាខ្លះដែលទន្លេមេគង្គហូរកាត់?</div>
+                <div class="options">
+                    <label><input type="radio" name="q30" value="A"> A. ស្ទឹងត្រែង ក្រចេះ កំពង់ចាម ត្បូងឃ្មុំ
+                        កំពង់ឆ្នាំង
+                        ពោធិ៍សាត់</label>
+                    <label><input type="radio" name="q30" value="B"> B. កណ្តាល ព្រៃវែង ភ្នំពេញ កំពង់ចាម ត្បូងឃ្មុំ
+                        ស្ទឹងត្រែង
+                        និងក្រចេះ</label>
+                    <label><input type="radio" name="q30" value="C"> C. ស្ទឹងត្រែង ព្រះវិហារ សៀមរាប កំពង់ធំ
+                        ភ្នំពេញ</label>
+                </div>
+                <div class="explanation" id="exp-q30"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៣១. តើបឹងយក្សឡោមស្ថិតនៅក្នុងខេត្តណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q31" value="A"> A. ខេត្តមណ្ឌលគិរី</label>
+                    <label><input type="radio" name="q31" value="B"> B. ខេត្តរតនគិរី</label>
+                    <label><input type="radio" name="q31" value="C"> C. ខេត្តស្ទឹងត្រែង</label>
+                </div>
+                <div class="explanation" id="exp-q31"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៣២. តើមូលដ្ឋានទ័ពខ្មែរក្រហមចុងក្រោយបំផុត ស្ថិតនៅក្នុងខេត្តណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q32" value="A"> A. ខេត្តប៉ៃលិន</label>
+                    <label><input type="radio" name="q32" value="B"> B. ខេត្តឧត្តរមានជ័យ (នៅអន្លង់វែង)</label>
+                    <label><input type="radio" name="q32" value="C"> C. ខេត្តព្រះវិហារ</label>
+                </div>
+                <div class="explanation" id="exp-q32"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៣៣. តើសម្តេចព្រះសង្ឃរាជ ជួន ណាត ប្រសូត្រនៅក្នុងខេត្តណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q33" value="A"> A. ខេត្តកំពង់ស្ពឺ</label>
+                    <label><input type="radio" name="q33" value="B"> B. ខេត្តកណ្តាល</label>
+                    <label><input type="radio" name="q33" value="C"> C. ខេត្តកំពង់ចាម</label>
+                </div>
+                <div class="explanation" id="exp-q33"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៣៤. តើលោកតាក្រមង៉ុយ ចាប់កំណើតនៅក្នុងខេត្តណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q34" value="A"> A. ខេត្តភ្នំពេញ</label>
+                    <label><input type="radio" name="q34" value="B"> B. ខេត្តកណ្តាល</label>
+                    <label><input type="radio" name="q34" value="C"> C. ខេត្តកំពង់ឆ្នាំង</label>
+                </div>
+                <div class="explanation" id="exp-q34"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៣៥. តើខេត្តណាដែលមានដើមត្នោតច្រើនជាងគេ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q35" value="A"> A. ខេត្តតាកែវ</label>
+                    <label><input type="radio" name="q35" value="B"> B. ខេត្តកំពង់ស្ពឺ</label>
+                    <label><input type="radio" name="q35" value="C"> C. ខេត្តកំពង់ឆ្នាំង</label>
+                </div>
+                <div class="explanation" id="exp-q35"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៣៦. តើខេត្តណាដែលមានរ៉ែត្បូងច្រើនជាងគេ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q36" value="A"> A. ខេត្តប៉ៃលិន</label>
+                    <label><input type="radio" name="q36" value="B"> B. ខេត្តរតនគិរី</label>
+                    <label><input type="radio" name="q36" value="C"> C. ខេត្តមណ្ឌលគិរី</label>
+                </div>
+                <div class="explanation" id="exp-q36"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៣៧. យោងតាមទិន្នន័យជំរឿនឆ្នាំ ២០១៩ តើចំនួនប្រជាជនច្រើនជាងគេស្ថិតនៅឯណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q37" value="A"> A. ខេត្តកណ្តាល</label>
+                    <label><input type="radio" name="q37" value="B"> B. រាជធានីភ្នំពេញ (ចំនួន ២,១២៩,៣៧១ នាក់)</label>
+                    <label><input type="radio" name="q37" value="C"> C. ខេត្តសៀមរាប</label>
+                </div>
+                <div class="explanation" id="exp-q37"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៣៨. តើខេត្តណាដែលមានប្រជាជនរស់នៅតិចជាងគេ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q38" value="A"> A. ខេត្តកែប</label>
+                    <label><input type="radio" name="q38" value="B"> B. ខេត្តមណ្ឌលគិរី</label>
+                    <label><input type="radio" name="q38" value="C"> C. ខេត្តប៉ៃលិន</label>
+                </div>
+                <div class="explanation" id="exp-q38"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៣៩. តើខេត្តណាដែលមានភ្នំខ្ពស់ជាងគេ (ភ្នំឱរ៉ាល់)?</div>
+                <div class="options">
+                    <label><input type="radio" name="q39" value="A"> A. ខេត្តពោធិ៍សាត់</label>
+                    <label><input type="radio" name="q39" value="B"> B. ខេត្តកំពង់ស្ពឺ</label>
+                    <label><input type="radio" name="q39" value="C"> C. ខេត្តកោះកុង</label>
+                </div>
+                <div class="explanation" id="exp-q39"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៤០. តើប្រាសាទអង្គរវត្តមានកម្ពស់ និងក្រឡាផ្ទៃប្រហែលប៉ុន្មាន?</div>
+                <div class="options">
+                    <label><input type="radio" name="q40" value="A"> A. កម្ពស់ ៦៥ ម៉ែត្រ និងក្រឡាផ្ទៃប្រហែល ២០០
+                        ហិចតា</label>
+                    <label><input type="radio" name="q40" value="B"> B. កម្ពស់ ៥៥ ម៉ែត្រ និងក្រឡាផ្ទៃប្រហែល ១៥០
+                        ហិចតា</label>
+                    <label><input type="radio" name="q40" value="C"> C. កម្ពស់ ៧០ ម៉ែត្រ និងក្រឡាផ្ទៃប្រហែល ២៥0
+                        ហិចតា</label>
+                </div>
+                <div class="explanation" id="exp-q40"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៤១. តើប្រាសាទភ្នំបាខែងកសាងឡើងនៅក្នុងឆ្នាំណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q41" value="A"> A. ឆ្នាំ៨៩៣ នៃគ.ស</label>
+                    <label><input type="radio" name="q41" value="B"> B. ឆ្នាំ៩០៧ នៃគ.ស</label>
+                    <label><input type="radio" name="q41" value="C"> C. ឆ្នាំ៩៦៧ នៃគ.ស</label>
+                </div>
+                <div class="explanation" id="exp-q41"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៤២. តើប្រាសាទភ្នំបាខែងមានកម្ពស់ប៉ុន្មានម៉ែត្រ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q42" value="A"> A. ៣៥ ម៉ែត្រ</label>
+                    <label><input type="radio" name="q42" value="B"> B. ៤៥ ម៉ែត្រ</label>
+                    <label><input type="radio" name="q42" value="C"> C. ៥៥ ម៉ែត្រ</label>
+                </div>
+                <div class="explanation" id="exp-q42"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៤៣. ប្រាសាទភ្នំបាខែងមានរចនាសម្ព័ន្ធជាជាន់ ដែលតំណាងឱ្យអ្វីនៅក្នុងព្រហ្មញ្ញសាសនា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q43" value="A"> A. មាន ៥ ជាន់ តំណាងឱ្យធាតុទាំង៥</label>
+                    <label><input type="radio" name="q43" value="B"> B. មាន ៧ ជាន់ តំណាងឱ្យឋានសួគ៌ទាំង៧ជាន់របស់ព្រះឥន្ទ</label>
+                    <label><input type="radio" name="q43" value="C"> C. មាន ៩ ជាន់ តំណាងឱ្យទិសទាំង៩</label>
+                </div>
+                <div class="explanation" id="exp-q43"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៤៤. តើប្រាសាទភ្នំបាខែងមានកំពូលសរុបចំនួនប៉ុន្មាន?</div>
+                <div class="options">
+                    <label><input type="radio" name="q44" value="A"> A. ៥៤ កំពូល</label>
+                    <label><input type="radio" name="q44" value="B"> B. ១០៨ កំពូល</label>
+                    <label><input type="radio" name="q44" value="C"> C. ១០៩ កំពូល</label>
+                </div>
+                <div class="explanation" id="exp-q44"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៤៥. តើប្រាសាទភ្នំបាខែងត្រូវបានកសាងឡើងដើម្បីតំណាងឱ្យអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q45" value="A"> A. ភ្នំព្រះសុមេរុ</label>
+                    <label><input type="radio" name="q45" value="B"> B. ស្ទឹងគង្គា</label>
+                    <label><input type="radio" name="q45" value="C"> C. មហាសមុទ្រ</label>
+                </div>
+                <div class="explanation" id="exp-q45"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៤៦. តើប្រាសាទភ្នំបាខែងកសាងឡើងដើម្បីឧទ្ទិសចំពោះអាទិទេពអង្គណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q46" value="A"> A. ព្រះវិស្ណុ</label>
+                    <label><input type="radio" name="q46" value="B"> B. ព្រះឥសូរ (ព្រះសិវៈ)</label>
+                    <label><input type="radio" name="q46" value="C"> C. ព្រះព្រហ្ម</label>
+                </div>
+                <div class="explanation" id="exp-q46"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៤៧. តើប្រាសាទបាពួនកសាងឡើងដោយព្រះមហាក្សត្រអង្គណាខ្លះ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q47" value="A"> A. កសាងដោយព្រះបាទជ័យវរ្ម័នទី៧</label>
+                    <label><input type="radio" name="q47" value="B"> B. កសាងដោយព្រះបាទសូរ្យវរ័្មនទី២</label>
+                    <label><input type="radio" name="q47" value="C"> C. កសាងដោយព្រះបាទសូរ្យវរ័្មនទី១
+                        និងសង់បង្ហើយដោយព្រះបាទឧទយាទិត្យវរ្ម័នទី២</label>
+                </div>
+                <div class="explanation" id="exp-q47"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៤៨. តើប្រាសាទបាពួនត្រូវបានកសាងឡើងនៅក្នុងរវាងសតវត្សរ៍ណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q48" value="A"> A. ដើមសតវត្សរ៍ទី១១</label>
+                    <label><input type="radio" name="q48" value="B"> B. ចុងសតវត្សរ៍ទី១២</label>
+                    <label><input type="radio" name="q48" value="C"> C. ដើមសតវត្សរ៍ទី៩</label>
+                </div>
+                <div class="explanation" id="exp-q48"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៤៩. តើប្រាសាទបាពួនកសាងឡើងដើម្បីឧទ្ទិសថ្វាយចំពោះសាសនាណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q49" value="A"> A. ព្រះពុទ្ធសាសនាមហាយាន</label>
+                    <label><input type="radio" name="q49" value="B"> B. ព្រហ្មញ្ញសាសនា</label>
+                    <label><input type="radio" name="q49" value="C"> C. ព្រះពុទ្ធសាសនាថេរវាទ</label>
+                </div>
+                <div class="explanation" id="exp-q49"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៥០. តើប្រាសាទណាដែលតំណាងឱ្យការកសាងក្រុងអង្គរទី២ (យសោធរបុរៈទី២)?</div>
+                <div class="options">
+                    <label><input type="radio" name="q50" value="A"> A. ប្រាសាទបាយ័ន</label>
+                    <label><input type="radio" name="q50" value="B"> B. ប្រាសាទបាពួន</label>
+                    <label><input type="radio" name="q50" value="C"> C. ប្រាសាទបន្ទាយស្រី</label>
+                </div>
+                <div class="explanation" id="exp-q50"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៥១. តើលោក ឌី ជហួត បានទទួលមរណភាពនៅក្នុងកាលបរិច្ឆេទណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q51" value="A"> A. ថ្ងៃទី៣ មិថុនា ឆ្នាំ១៩៨៧</label>
+                    <label><input type="radio" name="q51" value="B"> B. ថ្ងៃទី១២ មករា ឆ្នាំ១៩៩០</label>
+                    <label><input type="radio" name="q51" value="C"> C. ថ្ងៃទី២៥ តុលា ឆ្នាំ១៩៨៥</label>
+                </div>
+                <div class="explanation" id="exp-q51"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៥២. តើលោកបណ្ឌិតមហា ឈឹម សុមន៍ ចាប់កំណើតនៅឆ្នាំណា និងនៅឯណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q52" value="A"> A. ឆ្នាំ១៩១០ នៅខេត្តកណ្តាល</label>
+                    <label><input type="radio" name="q52" value="B"> B. ឆ្នាំ១៩០៥ នៅឃុំបសែត ស្រុកគងពិសី ខេត្តកំពង់ស្ពឺ</label>
+                    <label><input type="radio" name="q52" value="C"> C. ឆ្នាំ១៩១5 នៅខេត្តតាកែវ</label>
+                </div>
+                <div class="explanation" id="exp-q52"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៥៣. តើស្នាដៃដ៏ល្បីល្បាញរបស់លោកបណ្ឌិតមហា ឈឹម សុមន៍ គឺអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q53" value="A"> A. ការរៀបរៀងសង្ខេបស្នាដៃរឿង «ព្រះវេស្សន្តរ»</label>
+                    <label><input type="radio" name="q53" value="B"> B. ការនិពន្ធរឿង «ទុំទាវ» បែបថ្មី</label>
+                    <label><input type="radio" name="q53" value="C"> C. ការចងក្រងវចនានុក្រមខ្មែរ</label>
+                </div>
+                <div class="explanation" id="exp-q53"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៥៤. តើលោកបណ្ឌិតមហា ឈឹម សុមន៍ បានទទួលមរណភាពនៅក្នុងឆ្នាំណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q54" value="A"> A. ឆ្នាំ១៩៧០</label>
+                    <label><input type="radio" name="q54" value="B"> B. ឆ្នាំ១៩៧៥</label>
+                    <label><input type="radio" name="q54" value="C"> C. ឆ្នាំ១៩៧៩</label>
+                </div>
+                <div class="explanation" id="exp-q54"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៥៥. តើលោក រីម គីន កើតនៅក្នុងកាលបរិច្ឆេទណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q55" value="A"> A. ថ្ងៃទី៨ វិច្ឆិកា ឆ្នាំ១៩១១</label>
+                    <label><input type="radio" name="q55" value="B"> B. ថ្ងៃទី១៥ ធ្នូ ឆ្នាំ១៩១០</label>
+                    <label><input type="radio" name="q55" value="C"> C. ថ្ងៃទី១ មករា ឆ្នាំ១៩១២</label>
+                </div>
+                <div class="explanation" id="exp-q55"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៥៦. តើលោក រីម គីន បានទទួលមរណភាពនៅក្នុងឆ្នាំណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q56" value="A"> A. ឆ្នាំ១៩៥០</label>
+                    <label><input type="radio" name="q56" value="B"> B. ឆ្នាំ១៩៥៩</label>
+                    <label><input type="radio" name="q56" value="C"> C. ឆ្នាំ១៩៦៥</label>
+                </div>
+                <div class="explanation" id="exp-q56"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៥៧. តើស្នាដៃដ៏ល្បីល្បាញបំផុតរបស់លោក រីម គីន គឺរឿងអ្វី និងនិពន្ធនៅឆ្នាំណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q57" value="A"> A. រឿងភូមិតិរច្ឆាន និពន្ធក្នុងឆ្នាំ១៩៥០</label>
+                    <label><input type="radio" name="q57" value="B"> B. រឿងផ្កាស្រពោន និពន្ធក្នុងឆ្នាំ១៩៤៧</label>
+                    <label><input type="radio" name="q57" value="C"> C. រឿងសូផាត និពន្ធក្នុងឆ្នាំ១៩៣៨</label>
+                </div>
+                <div class="explanation" id="exp-q57"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៥៨. តើលោកបណ្ឌិត កេង វ៉ាន់សាក់ ចាប់កំណើតនៅថ្ងៃខែឆ្នាំណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q58" value="A"> A. ថ្ងៃទី១៩ ខែកញ្ញា ឆ្នាំ១៩២៥</label>
+                    <label><input type="radio" name="q58" value="B"> B. ថ្ងៃទី២០ ខែតុលា ឆ្នាំ១៩៣០</label>
+                    <label><input type="radio" name="q58" value="C"> C. ថ្ងៃទី១ មករា ឆ្នាំ១៩២០</label>
+                </div>
+                <div class="explanation" id="exp-q58"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៥៩. តើលោកបណ្ឌិត កេង វ៉ាន់សាក់ ចាប់កំណើតនៅឯណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q59" value="A"> A. នៅស្រុកឧដុង្គ ខេត្តកំពង់ស្ពឺ</label>
+                    <label><input type="radio" name="q59" value="B"> B. នៅស្រុកកំពង់លែង ខេត្តកំពង់ឆ្នាំង</label>
+                    <label><input type="radio" name="q59" value="C"> C. នៅក្រុងសៀមរាប ខេត្តសៀមរាប</label>
+                </div>
+                <div class="explanation" id="exp-q59"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៦០. តើលោកបណ្ឌិត កេង វ៉ាន់សាក់ មានស្នាដៃដ៏ចម្បងអ្វីខ្លះសម្រាប់អក្សរសាស្ត្រខ្មែរ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q60" value="A"> A. អ្នកបង្កើតពុម្ពអក្សរខ្មែរសម្រាប់ប្រើក្នុងម៉ាស៊ីនអង្គុលីលេខ
+                        និងនិពន្ធសៀវភៅស្រាវជ្រាវ រឿង ល្ខោន កំណាព្យជាច្រើន</label>
+                    <label><input type="radio" name="q60" value="B"> B. អ្នកបង្កើតវចនានុក្រមអេឡិចត្រូនិចដំបូងគេ</label>
+                    <label><input type="radio" name="q60" value="C"> C. អ្នកកែសម្រួលប្រព័ន្ធវេយ្យាករណ៍ខ្មែរទំនើប</label>
+                </div>
+                <div class="explanation" id="exp-q60"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៦១. តើលោកបណ្ឌិតសាស្ត្រាចារ្យ កេង វ៉ាន់សាក់ បានទទួលមរណភាពនៅពេលណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q61" value="A"> A. ថ្ងៃទី១៥ ខែសីហា ឆ្នាំ២០១០</label>
+                    <label><input type="radio" name="q61" value="B"> B. ថ្ងៃទី១៨ ខែធ្នូ ឆ្នាំ២០០៨</label>
+                    <label><input type="radio" name="q61" value="C"> C. ថ្ងៃទី៣០ ខែមករា ឆ្នាំ២០០៩</label>
+                </div>
+                <div class="explanation" id="exp-q61"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៦២. តើបទចម្រៀងដ៏ល្បីល្បាញរបស់កវីម្ចាស់ស្ទឹងសង្កែ លោក គង្គ ប៊ុនឈឿន មានបទអ្វីខ្លះ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q62" value="A"> A. បទចម្រៀង «រំដួលដងស្ទឹងសង្កែ» និងបទ «ស្ពានអូតាគី»</label>
+                    <label><input type="radio" name="q62" value="B"> B. បទចម្រៀង «ចំប៉ាបាត់ដំបង» និងបទ «នឹកភូមិភរិយា»</label>
+                    <label><input type="radio" name="q62" value="C"> C. បទចម្រៀង «ឱស្ទឹងសង្កែ» និងបទ «លាហើយបាត់ដំបង»</label>
+                </div>
+                <div class="explanation" id="exp-q62"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៦៣. តើកវីម្ចាស់ស្ទឹងសង្កែ លោក គង្គ ប៊ុនឈឿន ទទួលមរណភាពនៅថ្ងៃណា និងក្នុងជន្មាយុប៉ុន្មាន?
+                </div>
+                <div class="options">
+                    <label><input type="radio" name="q63" value="A"> A. ថ្ងៃទី១៧ ខែមេសា ឆ្នាំ២០១៦ ក្នុងជន្មាយុ ៧៧ ឆ្នាំ</label>
+                    <label><input type="radio" name="q63" value="B"> B. ថ្ងៃទី២០ ខែឧសភា ឆ្នាំ២០១៥ ក្នុងជន្មាយុ ៧៥ ឆ្នាំ</label>
+                    <label><input type="radio" name="q63" value="C"> C. ថ្ងៃទី៥ ខែសីហា ឆ្នាំ២០១៧ ក្នុងជន្មាយុ ៧៩ ឆ្នាំ</label>
+                </div>
+                <div class="explanation" id="exp-q63"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៦៤. តើកវីម្ចាស់ស្ទឹងសង្កែ លោក គង្គ ប៊ុនឈឿន ចាប់កំណើតនៅថ្ងៃខែឆ្នាំណា និងនៅឯណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q64" value="A"> A. ថ្ងៃទី១ មករា ឆ្នាំ១៩៤០ នៅខេត្តសៀមរាប</label>
+                    <label><input type="radio" name="q64" value="B"> B. ថ្ងៃទី១៨ ខែតុលា ឆ្នាំ១៩៣៩ នៅខេត្តបាត់ដំបង</label>
+                    <label><input type="radio" name="q64" value="C"> C. ថ្ងៃទី៣០ ខែតុលា ឆ្នាំ១៩៩៩ នៅខេត្តព្រៃវែង</label>
+                </div>
+                <div class="explanation" id="exp-q64"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៦៥. តើប្រទេសដែលមានខឿនសេដ្ឋកិច្ចរីកលូតលាស់ខ្លាំង គេហៅថាជាប្រទេសបែបណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q65" value="A"> A. ប្រទេសអភិវឌ្ឍន៍</label>
+                    <label><input type="radio" name="q65" value="B"> B. ប្រទេសកំពុងអភិវឌ្ឍន៍</label>
+                    <label><input type="radio" name="q65" value="C"> C. ប្រទេសតតិយលោក</label>
+                </div>
+                <div class="explanation" id="exp-q65"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៦៦. តើប្រទេសដែលអន់ថយផ្នែកសេដ្ឋកិច្ច
+                    ហើយខំប្រឹងប្រែងស្ដារលើគ្រប់វិស័យឡើងវិញហៅថាជាប្រទេសបែបណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q66" value="A"> A. ប្រទេសអភិវឌ្ឍន៍</label>
+                    <label><input type="radio" name="q66" value="B"> B. ប្រទេសកំពុងអភិវឌ្ឍន៍</label>
+                    <label><input type="radio" name="q66" value="C"> C. ប្រទេសតតិយលោក</label>
+                </div>
+                <div class="explanation" id="exp-q66"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៦៧. តើប្រទេសដែលអន់ថយផ្នែកសេដ្ឋកិច្ចខ្លាំង ហើយមិនព្រមធ្វើការកែប្រែ
+                    ឬអភិវឌ្ឍហៅថាជាប្រទេសបែបណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q67" value="A"> A. ប្រទេសអភិវឌ្ឍន៍</label>
+                    <label><input type="radio" name="q67" value="B"> B. ប្រទេសកំពុងអភិវឌ្ឍន៍</label>
+                    <label><input type="radio" name="q67" value="C"> C. ប្រទេសតតិយលោក (ប្រទេសក្រីក្របំផុត)</label>
+                </div>
+                <div class="explanation" id="exp-q67"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៦៨. តើច្បាប់ដែលគេប្រកាសឱ្យប្រើប្រាស់នៅក្នុងរយៈពេល ឬពេលកំណត់ណាមួយហៅថាជាច្បាប់អ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q68" value="A"> A. ច្បាប់លោកិយ</label>
+                    <label><input type="radio" name="q68" value="B"> B. ច្បាប់ធម្មជាតិ</label>
+                    <label><input type="radio" name="q68" value="C"> C. ច្បាប់រដ្ឋធម្មនុញ្ញ</label>
+                </div>
+                <div class="explanation" id="exp-q68"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៦៩. តើច្បាប់ដែលគេប្រកាសឱ្យប្រើប្រាស់តាមពន្លឺនៃវិចារណញ្ញាណរបស់មនុស្សហៅថាជាច្បាប់អ្វី?
+                </div>
+                <div class="options">
+                    <label><input type="radio" name="q69" value="A"> A. ច្បាប់លោកិយ</label>
+                    <label><input type="radio" name="q69" value="B"> B. ច្បាប់ធម្មជាតិ</label>
+                    <label><input type="radio" name="q69" value="C"> C. ច្បាប់ព្រហ្មទណ្ឌ</label>
+                </div>
+                <div class="explanation" id="exp-q69"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៧០. ចាប់ពីឆ្នាំ ១៩៧០ ដល់ ១៩៧៥ តើប្រទេសកម្ពុជា (របបសាធារណរដ្ឋខ្មែរ)
+                    មានទំនោរនយោបាយទៅរកប្រទេសណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q70" value="A"> A. សហភាពសូវៀត</label>
+                    <label><input type="radio" name="q70" value="B"> B. សហរដ្ឋអាមេរិក</label>
+                    <label><input type="radio" name="q70" value="C"> C. សាធារណរដ្ឋប្រជាមានិតចិន</label>
+                </div>
+                <div class="explanation" id="exp-70"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">៧១. តើពណ៌សម្លៀកបំពាក់តាមប្រពៃណីខ្មែរសម្រាប់ «ថ្ងៃអាទិត្យ» គឺពណ៌អ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q71" value="A"> A. ពណ៌លឿងទុំ</label>
+                    <label><input type="radio" name="q71" value="B"> B. ពណ៌ក្រហម</label>
+                    <label><input type="radio" name="q71" value="C"> C. ពណ៌បៃតង</label>
+                </div>
+                <div class="explanation" id="exp-q71"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៧២. តើទង់ជាតិនៃព្រះរាជាណាចក្រកម្ពុជា មានពណ៌សរុបចំនួនប៉ុន្មាន?</div>
+                <div class="options">
+                    <label><input type="radio" name="q72" value="A"> A. ២ ពណ៌</label>
+                    <label><input type="radio" name="q72" value="B"> B. ៣ ពណ៌ (ខៀវ ក្រហម ស)</label>
+                    <label><input type="radio" name="q72" value="C"> C. ៤ ពណ៌</label>
+                </div>
+                <div class="explanation" id="exp-q72"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៧៣. នៅក្នុងទង់ជាតិកម្ពុជា តើ «ពណ៌ខៀវ» តំណាងឲ្យអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q73" value="A"> A. សាមគ្គីភាព ភាតរភាព មេត្តាករុណា សន្តិភាព អហិង្សា
+                        ស្ថិតក្រោមព្រះរាជកិច្ចដឹកនាំរបស់ព្រះមហាក្សត្រ</label>
+                    <label><input type="radio" name="q73" value="B"> B. ស្មារតីអង់អាចក្លាហាន
+                        ពុះពារគ្រប់ឧបសគ្គដើម្បីជាតិមាតុភូមិ</label>
+                    <label><input type="radio" name="q73" value="C"> C. ទឹកដី និងសម្បត្តិធម្មជាតិដ៏សម្បូរបែប</label>
+                </div>
+                <div class="explanation" id="exp-q73"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៧៤. នៅក្នុងទង់ជាតិកម្ពុជា តើ «ពណ៌ក្រហម» តំណាងឲ្យអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q74" value="A"> A. ព្រះពុទ្ធសាសនា និងសីលធម៌សង្គម</label>
+                    <label><input type="radio" name="q74" value="B"> B. ស្មារតីអង់អាចក្លាហាន ពុះពារគ្រប់ឧបសគ្គ
+                        ហ៊ានពលីកម្មគ្រប់បែបយ៉ាងដើម្បីជាតិមាតុភូមិ</label>
+                    <label><input type="radio" name="q74" value="C"> C. របបរាជានិយម និងបូរណភាពទឹកដី</label>
+                </div>
+                <div class="explanation" id="exp-q74"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៧៥. នៅក្នុងទង់ជាតិកម្ពុជា តើ «រូបប្រាសាទអង្គរវត្តពណ៌ស» តំណាងឲ្យអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q75" value="A"> A. អរិយធម៌ខ្មែរដ៏រុងរឿងនាសម័យមហានគរ និងតំណាងឲ្យសាសនា
+                        សីលធម៌</label>
+                    <label><input type="radio" name="q75" value="B"> B. កម្លាំងប្រដាប់អាវុធការពារជាតិ</label>
+                    <label><input type="radio" name="q75" value="C"> C. វិស័យកសិកម្ម និងឧស្សាហកម្ម</label>
+                </div>
+                <div class="explanation" id="exp-q75"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៧៦. តើចម្រៀងជាតិរបស់កម្ពុជាមានឈ្មោះអ្វី និងមានប៉ុន្មានវគ្គ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q76" value="A"> A. បទពង្សាវតារខ្មែរ មាន ៤ វគ្គ</label>
+                    <label><input type="radio" name="q76" value="B"> B. បទនគរាជ (និពន្ធដោយសម្តេចព្រះសង្ឃរាជ ជួន ណាត) មាន ៣
+                        វគ្គ</label>
+                    <label><input type="radio" name="q76" value="C"> C. បទស្រឡាញ់ជាតិ មាន ២ វគ្គ</label>
+                </div>
+                <div class="explanation" id="exp-q76"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៧៧. តើបាវចនាជាតិរបស់ព្រះរាជាណាចក្រកម្ពុជាគឺអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q77" value="A"> A. ឯករាជ្យ សន្តិភាព សេរីភាព</label>
+                    <label><input type="radio" name="q77" value="B"> B. ជាតិ សាសនា ព្រះមហាក្សត្រ</label>
+                    <label><input type="radio" name="q77" value="C"> C. សាមគ្គីភាព វឌ្ឍនភាព វប្បធម៌</label>
+                </div>
+                <div class="explanation" id="exp-q77"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៧៨. តើរុក្ខជាតិ និងបុប្ផាជាតិតំណាងព្រះរាជាណាចក្រកម្ពុជា គឺអ្វីខ្លះ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q78" value="A"> A. ដើមគគីរ និងផ្កាឈូក</label>
+                    <label><input type="radio" name="q78" value="B"> B. ដើមត្នោត និងផ្កាចំប៉ា</label>
+                    <label><input type="radio" name="q78" value="C"> C. ដើមត្នោត និងផ្ការំដួល</label>
+                </div>
+                <div class="explanation" id="exp-q78"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៧៩. របៀបសំពះខ្មែរមាន ៥ របៀប។ តើការសំពះដែលមានកម្ពស់ត្រឹម «ចុងច្រមុះ»
+                    ប្រើសម្រាប់សំពះអ្នកណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q79" value="A"> A. សម្រាប់សំពះវ័យ ឬឋានៈស្មើគ្នា</label>
+                    <label><input type="radio" name="q79" value="B"> B. សម្រាប់សំពះ មាតាបិតា ជីដូនជីតា គ្រូបាអាចារ្យ</label>
+                    <label><input type="radio" name="q79" value="C"> C. សម្រាប់សំពះព្រះសង្ឃ ឬព្រះមហាក្សត្រ</label>
+                </div>
+                <div class="explanation" id="exp-q79"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៨០. តើទិវាសិទ្ធិមនុស្សអន្តរជាតិត្រូវបានប្រារព្ធឡើងនៅថ្ងៃខែឆ្នាំណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q80" value="A"> A. ថ្ងៃទី១០ ខែធ្នូ ឆ្នាំ១៩៤៨</label>
+                    <label><input type="radio" name="q80" value="B"> B. ថ្ងៃទី២៣ ខែតុលា ឆ្នាំ១៩៩១</label>
+                    <label><input type="radio" name="q80" value="C"> C. ថ្ងៃទី៧ ខែមករា ឆ្នាំ១៩៧៩</label>
+                </div>
+                <div class="explanation" id="exp-q80"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៨១. នៅក្នុងព្រះពុទ្ធសាសនា តើ «អរិយសច្ចៈ» មានអ្វីខ្លះ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q81" value="A"> A. សីល សមាធិ បញ្ញា</label>
+                    <label><input type="radio" name="q81" value="B"> B. ទុក្ខអរិយសច្ចៈ សមុទយអរិយសច្ចៈ និរោធអរិយសច្ចៈ
+                        និងមគ្គអរិយសច្ចៈ</label>
+                    <label><input type="radio" name="q81" value="C"> C. លោភៈ ទោសៈ មោហៈ</label>
+                </div>
+                <div class="explanation" id="exp-q81"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៨២. តើរាជរដ្ឋាភិបាលថ្មីក្រោយការបោះឆ្នោតឆ្នាំ២០២៣
+                    បានឡើងកាន់តំណែងនៅក្នុងនីតិកាលទីប៉ុន្មាននៃរដ្ឋសភា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q82" value="A"> A. នីតិកាលទី៦</label>
+                    <label><input type="radio" name="q82" value="B"> B. នីតិកាលទី៧</label>
+                    <label><input type="radio" name="q82" value="C"> C. នីតិកាលទី៨</label>
+                </div>
+                <div class="explanation" id="exp-q82"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៨៣. តើអំពើហិង្សាក្នុងគ្រួសារច្រើនតែកើតមានឡើងចំពោះស្រទាប់វណ្ណៈណាខ្លះ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q83" value="A"> A. កើតមានតែចំពោះគ្រួសារក្រីក្រប៉ុណ្ណោះ</label>
+                    <label><input type="radio" name="q83" value="B"> B. កើតមានតែចំពោះអ្នកមិនបានរៀនសូត្រ</label>
+                    <label><input type="radio" name="q83" value="C"> C. កើតមានឡើងនៅគ្រប់ស្រទាប់វណ្ណៈទាំងអស់</label>
+                </div>
+                <div class="explanation" id="exp-q83"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៨៤. ការរស់នៅជាមួយគ្នាដោយឲ្យតម្លៃគ្នាទៅវិញទៅមក គោរពសិទ្ធិគ្នា និងរួមរស់ដោយសន្តិភាព
+                    ហៅថាអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q84" value="A"> A. សីលធម៌</label>
+                    <label><input type="radio" name="q84" value="B"> B. នីតិរដ្ឋ</label>
+                    <label><input type="radio" name="q84" value="C"> C. វប្បធម៌</label>
+                </div>
+                <div class="explanation" id="exp-q84"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៨៥. ការរស់នៅដោយសាមគ្គីភាព គ្មានការវាយដំឈ្លោះទាស់ទែងគ្នា ហៅថាអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q85" value="A"> A. អត្តអាទិ៍</label>
+                    <label><input type="radio" name="q85" value="B"> B. ភាតរភាព</label>
+                    <label><input type="radio" name="q85" value="C"> C. អាត្មានិយម</label>
+                </div>
+                <div class="explanation" id="exp-q85"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៨៦. ការចេះពិចារណាជ្រើសរើសគោលដៅ និងផ្លូវដើររបស់ខ្លួនសម្រាប់អនាគត ហៅថាអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q86" value="A"> A. ការសម្រេចចិត្ត</label>
+                    <label><input type="radio" name="q86" value="B"> B. ការរារែក</label>
+                    <label><input type="radio" name="q86" value="C"> C. ការប្រថុយប្រថាន</label>
+                </div>
+                <div class="explanation" id="exp-q86"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៨៧. ការមានសមត្ថភាពខ្ពស់ក្នុងការធ្វើអ្វីមួយយ៉ាងស្ទាត់ជំនាញពីកំណើត ឬការហ្វឹកហាត់ ហៅថាអ្វី?
+                </div>
+                <div class="options">
+                    <label><input type="radio" name="q87" value="A"> A. ភ័ព្វសំណាង</label>
+                    <label><input type="radio" name="q87" value="B"> B. ទេពកោសល្យ</label>
+                    <label><input type="radio" name="q87" value="C"> C. បំណិនជីវិត</label>
+                </div>
+                <div class="explanation" id="exp-q87"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៨៨. ការមានគំនិតផ្ដួចផ្ដើមបង្កើត ឬធ្វើអ្វីមួយថ្មីប្លែកឲ្យលេចចេញជារូបរាងឡើង ហៅថាអ្វី?
+                </div>
+                <div class="options">
+                    <label><input type="radio" name="q88" value="A"> A. គំនិតច្នៃប្រឌិត</label>
+                    <label><input type="radio" name="q88" value="B"> B. គំនិតចម្លងតាម</label>
+                    <label><input type="radio" name="q88" value="C"> C. គំនិតអភិរក្សនិយម</label>
+                </div>
+                <div class="explanation" id="exp-q88"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៨៩. តើរបបមាតាធិបតេយ្យ (Matriarchy) សំដៅយកអ្វីជាធំ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q89" value="A"> A. សំដៅយកបុរសជាមេគ្រួសារ និងជាអ្នកដឹកនាំ</label>
+                    <label><input type="radio" name="q89" value="B"> B. សំដៅយកស្ត្រីជាមាតា និងជាអ្នកដឹកនាំដ៏សំខាន់</label>
+                    <label><input type="radio" name="q89" value="C"> C. សំដៅយកការដឹកនាំរួមគ្នាដោយគ្មានការបែងចែក</label>
+                </div>
+                <div class="explanation" id="exp-q89"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៩០. តើគ្រួសារមួយអាចមានសុភមង្គលទៅបាន ដោយសារកត្តាចម្បងអ្វីខ្លះ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q90" value="A"> A. មានទ្រព្យសម្បត្តិស្តុកស្តម្ភតែម្យ៉ាង</label>
+                    <label><input type="radio" name="q90" value="B"> B. មានការស្រុះស្រួលចេះយល់ចិត្តគ្នា
+                        និងមានចំណូលសមរម្យអាចទ្រទ្រង់ជីវភាពបាន</label>
+                    <label><input type="radio" name="q90" value="C"> C. រស់នៅដោយពឹងផ្អែកលើអ្នកដទៃ</label>
+                </div>
+                <div class="explanation" id="exp-q90"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៩១. តើដើមកំណើតនៃអរិយធម៌ខ្មែរ ចាប់កំណើតឡើងដំបូងចេញពីអំបូរជនជាតិណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q91" value="A"> A. អំបូរមន-ខ្មែរ</label>
+                    <label><input type="radio" name="q91" value="B"> B. អំបូរសូឡូ</label>
+                    <label><input type="radio" name="q91" value="C"> C. អំបូរចាម</label>
+                </div>
+                <div class="explanation" id="exp-q91"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៩២. នៅក្នុងវិស័យសិល្បៈខ្មែរ តើសិល្បៈចម្លាក់ត្រូវបានបែងចែកជាប៉ុន្មានប្រភេទ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q92" value="A"> A. ២ ប្រភេទ គឺចម្លាក់ទាប និងចម្លាក់ខ្ពស់</label>
+                    <label><input type="radio" name="q92" value="B"> B. ៣ ប្រភេទ គឺចម្លាក់លិប ចម្លាក់លៀន និងចម្លាក់លោត (មូល)</label>
+                    <label><input type="radio" name="q92" value="C"> C. ៤ ប្រភេទ គឺចម្លាក់ឈើ ថ្ម ដែក និងដីដុត</label>
+                </div>
+                <div class="explanation" id="exp-q92"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៩៣. តើឥស្សរជនរូបណាដែលមានគំនិតផ្ដួចផ្ដើមបង្កើតរដ្ឋធម្មនុញ្ញខ្មែរមុនគេបង្អស់?</div>
+                <div class="options">
+                    <label><input type="radio" name="q93" value="A"> A. ព្រះអង្គម្ចាស់ ស៊ីសុវត្ថិ យុត្តិវង្ស</label>
+                    <label><input type="radio" name="q93" value="B"> B. សម្តេច ឡុង បូរ៉េត</label>
+                    <label><input type="radio" name="q93" value="C"> C. លោក សឺន សាន</label>
+                </div>
+                <div class="explanation" id="exp-q93"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៩៤. លិខិតបទដ្ឋានគតិយុត្តិដែលចេញដោយព្រះមហាក្សត្រ
+                    ដើម្បីប្រកាសឲ្យប្រើប្រាស់ច្បាប់ក្រោយពីរដ្ឋសភាបានអនុម័ត ហៅថាអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q94" value="A"> A. ព្រះរាជក្រឹត្យ</label>
+                    <label><input type="radio" name="q94" value="B"> B. ព្រះរាជក្រម</label>
+                    <label><input type="radio" name="q94" value="C"> C. អនុក្រឹត្យ</label>
+                </div>
+                <div class="explanation" id="exp-q94"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៩៥. លិខិតបទដ្ឋានគតិយុត្តិដែលចេញដោយព្រះមហាក្សត្រ សម្រាប់តែងតាំងមន្ត្រីជាន់ខ្ពស់
+                    ឬតាមសំណើរបស់នាយករដ្ឋមន្ត្រី ហៅថាអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q95" value="A"> A. ព្រះរាជក្រម</label>
+                    <label><input type="radio" name="q95" value="B"> B. សារាចរ</label>
+                    <label><input type="radio" name="q95" value="C"> C. ព្រះរាជក្រឹត្យ</label>
+                </div>
+                <div class="explanation" id="exp-q95"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៩៦. តែកងកម្លាំងប្រដាប់អាវុធជាតិ
+                    ត្រូវប្រកាន់ខ្ជាប់នូវគោលការណ៍សំខាន់អ្វីខ្លះចំពោះមុខនយោបាយ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q96" value="A"> A. ត្រូវមានទំនោរទៅរកបក្សនយោបាយណាមួយ</label>
+                    <label><input type="radio" name="q96" value="B"> B. ត្រូវប្រកាន់នូវអព្យាក្រឹតភាព និងការពារជាតិមាតុភូមិ</label>
+                    <label><input type="radio" name="q96" value="C"> C. ត្រូវចូលរួមធ្វើការសម្រេចចិត្តជំនួសរដ្ឋសភា</label>
+                </div>
+                <div class="explanation" id="exp-q96"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៩៧. តើរដ្ឋាភិបាលជាអង្គការអំណាចមួយបែបណា នៅក្នុងរចនាសម្ព័ន្ធដឹកនាំប្រទេស?</div>
+                <div class="options">
+                    <label><input type="radio" name="q97" value="A"> A. អង្គការនីតិប្បញ្ញត្តិ</label>
+                    <label><input type="radio" name="q97" value="B"> B. អង្គការតុលាការ</label>
+                    <label><input type="radio" name="q97" value="C"> C. អង្គការនីតិប្រតិបត្តិ
+                        (ទទួលខុសត្រូវដឹកនាំអនុវត្តច្បាប់ក្នុងប្រទេស)</label>
+                </div>
+                <div class="explanation" id="exp-q97"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៩៨. យោងតាមរដ្ឋធម្មនុញ្ញ តើប្រជាពលរដ្ឋខ្មែរគ្រប់រូបមានសិទ្ធិស្មើគ្នានៅចំពោះមុខអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q98" value="A"> A. ចំពោះមុខច្បាប់</label>
+                    <label><input type="radio" name="q98" value="B"> B. ចំពោះមុខមន្ត្រីរាជការ</label>
+                    <label><input type="radio" name="q98" value="C"> C. ចំពោះមុខទ្រព្យសម្បត្តិ</label>
+                </div>
+                <div class="explanation" id="exp-q98"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">៩៩. តើព្រះរាជាណាចក្រកម្ពុជាប្រកាន់យករបបនយោបាយបែបណា?</div>
+                <div class="options">
+                    <label><input type="radio" name="q99" value="A"> A. របបកុម្មុយនីស្តឯកបក្ស</label>
+                    <label><input type="radio" name="q99" value="B"> B. លទ្ធិប្រជាធិបតេយ្យសេរីពហុបក្ស</label>
+                    <label><input type="radio" name="q99" value="C"> C. របបផ្តាច់ការសក្តិភូមិ</label>
+                </div>
+                <div class="explanation" id="exp-q99"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">១០០. តើរដ្ឋធម្មនុញ្ញនៃព្រះរាជាណាចក្រកម្ពុជា បានបែងចែកអំណាចរដ្ឋជាប៉ុន្មានផ្នែកធំៗ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q100" value="A"> A. ២ គឺ អំណាចរដ្ឋបាល និងអំណាចយោធា</label>
+                    <label><input type="radio" name="q100" value="B"> B. ៣ គឺ អំណាចនីតិប្បញ្ញត្តិ នីតិប្រតិបត្តិ និងតុលាការ</label>
+                    <label><input type="radio" name="q100" value="C"> C. ៤ គឺ អំណាចព្រះមហាក្សត្រ រដ្ឋសភា ព្រឹទ្ធសភា
+                        និងរដ្ឋាភិបាល</label>
+                </div>
+                <div class="explanation" id="exp-q100"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">១០១. តើតំបន់ឆ្នេរ និងសមុទ្រនៃប្រទេសកម្ពុជា មានខេត្តចំនួនប៉ុន្មាន? អ្វីខ្លះ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q101" value="A"> A. មាន ៣ ខេត្ត គឺ កំពត ព្រះសីហនុ និងកែប</label>
+                    <label><input type="radio" name="q101" value="B"> B. មាន ៤ ខេត្ត គឺ កំពត កោះកុង ព្រះសីហនុ និងកែប</label>
+                    <label><input type="radio" name="q101" value="C"> C. មាន ៥ ខេត្ត គឺ កំពត កោះកុង ព្រះសីហនុ កែប និងតាកែវ</label>
+                </div>
+                <div class="explanation" id="exp-q101"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">១០២. នៅក្នុងប្រព័ន្ធតុលាការ តើអ្នកណាជាអ្នកមានសិទ្ធិចេញដីកាសម្រេចឲ្យចាប់ខ្លួន
+                    ឬឃុំខ្លួនជនល្មើសជាបណ្តោះអាសន្ន?</div>
+                <div class="options">
+                    <label><input type="radio" name="q102" value="A"> A. មន្ត្រីនគរបាលយុត្តិធម៌</label>
+                    <label><input type="radio" name="q102" value="B"> B. ព្រះរាជអាជ្ញាអមសាលាដំបូង</label>
+                    <label><input type="radio" name="q102" value="C"> C. ចៅក្រមស៊ើបសួរ</label>
+                </div>
+                <div class="explanation" id="exp-q102"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">១០៣. ពាក្យសុំឲ្យពិនិត្យ ឬជម្រះក្តីឡើងវិញចំពោះសាលក្រមរបស់សាលាដំបូងដែលខ្លួនមិនសុខចិត្ត
+                    ហៅថាអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q103" value="A"> A. បណ្ដឹងឧទ្ធរណ៍</label>
+                    <label><input type="radio" name="q103" value="B"> B. បណ្ដឹងសាទុក្ខ</label>
+                    <label><input type="radio" name="q103" value="C"> C. បណ្ដឹងទាស់</label>
+                </div>
+                <div class="explanation" id="exp-q103"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">១០៤. ពាក្យទាមទារសុំឲ្យមានការសងការខូចខាតទាំងផ្នែកសម្ភារៈ និងជំងឺចិត្ត នៅក្នុងរឿងក្តី
+                    ហៅថាអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q104" value="A"> A. បណ្ដឹងអាជ្ញា</label>
+                    <label><input type="radio" name="q104" value="B"> B. បណ្ដឹងរដ្ឋប្បវេណី</label>
+                    <label><input type="radio" name="q104" value="C"> C. បណ្ដឹងព្រហ្មទណ្ឌ</label>
+                </div>
+                <div class="explanation" id="exp-q104"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">១០៥. ពាក្យសុំតវ៉ា ឬបដិសេធសេចក្តីសម្រេច (សាលដីកា) របស់សាលាឧទ្ធរណ៍ទៅកាន់តុលាការកំពូល
+                    ហៅថាអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q105" value="A"> A. បណ្ដឹងសាទុក្ខ</label>
+                    <label><input type="radio" name="q105" value="B"> B. បណ្ដឹងឧទ្ធរណ៍</label>
+                    <label><input type="radio" name="q105" value="C"> C. បណ្ដឹងរំលាយសាលក្រម</label>
+                </div>
+                <div class="explanation" id="exp-q105"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">១០៦. បណ្ដឹងដែលមានគោលបំណងផ្តន្ទាទោសដាក់ពន្ធនាគារ និងពិន័យជាប្រាក់ចំពោះអ្នកប្រព្រឹត្តខុស
+                    ច្បាប់កំណត់ ហៅថាអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q106" value="A"> A. បណ្ដឹងរដ្ឋប្បវេណី</label>
+                    <label><input type="radio" name="q106" value="B"> B. បណ្ដឹងអាជ្ញា (ឬបណ្ដឹងព្រហ្មទណ្ឌ)</label>
+                    <label><input type="radio" name="q106" value="C"> C. បណ្ដឹងរដ្ឋបាល</label>
+                </div>
+                <div class="explanation" id="exp-q106"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">១០៧. តើសេចក្តីសម្រេចចុងក្រោយរបស់សាលាជម្រះក្តីជាន់ខ្ពស់ (ដូចជាសាលាឧទ្ធរណ៍ ឬតុលាការកំពូល)
+                    ហៅថាអ្វី?</div>
+                <div class="options">
+                    <label><input type="radio" name="q107" value="A"> A. សាលក្រម</label>
+                    <label><input type="radio" name="q107" value="B"> B. សាលដីកា</label>
+                    <label><input type="radio" name="q107" value="C"> C. ដីកាសម្រេច</label>
+                </div>
+                <div class="explanation" id="exp-q107"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">១០៨. តាមច្បាប់ការងារ តើអាយុអប្បបរមាដែលកុមារអាចចូលធ្វើការងារស្រាលៗបាន (ដោយធានាសុខភាព
+                    សន្តិសុខ និងសីលធម៌) គឺអាយុប៉ុន្មាន?</div>
+                <div class="options">
+                    <label><input type="radio" name="q108" value="A"> A. ចន្លោះពី ១២ ទៅ ១៥ ឆ្នាំ</label>
+                    <label><input type="radio" name="q108" value="B"> B. ចាប់ពី ១៥ ឆ្នាំឡើងទៅ</label>
+                    <label><input type="radio" name="q108" value="C"> C. ចាប់ពី ១៨ ឆ្នាំឡើងទៅ</label>
+                </div>
+                <div class="explanation" id="exp-q108"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">១០៩. តើតំបន់ភូមិភាគខ្ពង់រាប និងភ្នំនៃប្រទេសកម្ពុជា រួមមានខេត្តណាខ្លះ?</div>
+                <div class="options">
+                    <label><input type="radio" name="q109" value="A"> A. កំពង់ស្ពឺ ក្រចេះ មណ្ឌលគិរី ព្រះវិហារ រតនគិរី
+                        និងស្ទឹងត្រែង</label>
+                    <label><input type="radio" name="q109" value="B"> B. បាត់ដំបង បន្ទាយមានជ័យ សៀមរាប និងពោធិ៍សាត់</label>
+                    <label><input type="radio" name="q109" value="C"> C. ព្រៃវែង ស្វាយរៀង កណ្តាល និងតាកែវ</label>
+                </div>
+                <div class="explanation" id="exp-q109"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">១១០. យោងតាមទិន្នន័យជំរឿនផ្លូវការឆ្នាំ ២០១៩
+                    តើរាជធានី-ខេត្តណាដែលមានចំនួនប្រជាជនរស់នៅច្រើនជាងគេបង្អស់?</div>
+                <div class="options">
+                    <label><input type="radio" name="q110" value="A"> A. ខេត្តកណ្តាល</label>
+                    <label><input type="radio" name="q110" value="B"> B. ខេត្តកំពង់ចាម</label>
+                    <label><input type="radio" name="q110" value="C"> C. រាជធានីភ្នំពេញ (មានចំនួន ២,១២៩,៣៧១ នាក់ ឬ ១៣.៩%)</label>
+                </div>
+                <div class="explanation" id="exp-q110"></div>
+            </div>
+            
+            <div class="question-block">
+                <div class="question-title">១១១. យោងតាមទិន្នន័យជំរឿនផ្លូវការឆ្នាំ ២០១៩
+                    តើខេត្តណាដែលមានចំនួនប្រជាជនរស់នៅតិចជាងគេបង្អស់?</div>
+                <div class="options">
+                    <label><input type="radio" name="q111" value="A"> A. ខេត្តកែប (មានចំនួន ៤១,៧៩៨ នាក់ ឬ ០.៣%)</label>
+                    <label><input type="radio" name="q111" value="B"> B. ខេត្តប៉ៃលិន</label>
+                    <label><input type="radio" name="q111" value="C"> C. ខេត្តមណ្ឌលគិរី</label>
+                </div>
+                <div class="explanation" id="exp-q111"></div>
+            </div>
+
+
+
+
+
+
+
+
+
+            <button type="button" id="submitBtn" onclick="checkAnswers(true)">ផ្ទៀងផ្ទាត់លទ្ធផលទាំងអស់</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+
+    <script>
+        let timeLeft = 2700;
+            let timerInterval;
+            let isSubmitted = false;
+
+            const fullAnswersText = {
+                q1: "<strong>ចម្លើយពេញ៖</strong> ព្រែកជីកហ្វូណនតេជោ មានប្រវែងសរុបប្រមាណ ១៨០ គីឡូម៉ែត្រ ដោយតភ្ជាប់ពីប្រព័ន្ធដៃទន្លេមេគង្គទៅកាន់ផ្លូវសមុទ្រ។",
+                q2: "<strong>ចម្លើយពេញ៖</strong> ព្រែកជីកហ្វូណនតេជោ គ្រោងចំណាយថវិកាសរុបប្រមាណ ១ ៧០០ លានដុល្លារអាមេរិក។",
+                q3: "<strong>ចម្លើយពេញ៖</strong> ព្រែកជីកហ្វូណនតេជោ មានទីតាំងចាប់ពីព្រែកតាកែវ ឆ្លងកាត់ព្រែកតាឯក ចូលតាមព្រែកតាហ៊ីង និងបន្តរហូតដល់សមុទ្រខេត្តកែប។",
+                q4: "<strong>ចម្លើយពេញ៖</strong> ព្រែកជីកហ្វូណនតេជោ ឆ្លងកាត់ខេត្តចំនួន ៤ រួមមាន៖ ខេត្តកណ្តាល ខេត្តតាកែវ ខេត្តកំពត និងខេត្តកែប។",
+                q5: "<strong>ចម្លើយពេញ៖</strong> តាមការប៉ាន់ស្មាន ប្រជាជនដែលរស់នៅអមសងខាង និងទទួលផលពីព្រែកជីកហ្វូណនតេជោ មានចំនួនសរុបប្រមាណ ១ លាន ៦ សែននាក់។",
+                q6: "<strong>ចម្លើយពេញ៖</strong> ព្រែកជីកហ្វូណនតេជោ មានទំហំទទឹងខាងលើ ១០០ម៉ែត្រ ទទឹងខាងក្រោម ៨០ម៉ែត្រ និងជម្រៅ ៥,៤ម៉ែត្រ (ជម្រៅនាវាចរណ៍ ៤,៧ម៉ែត្រ)",
+                q7: "<strong>ចម្លើយពេញ៖</strong> ហេដ្ឋារចនាសម្ព័ន្ធនៃព្រែកជីកហ្វូណនតេជោ មានសន្ទះផ្លូវនាវាចរណ៍ចំនួន ០៣ កន្លែង, ស្ពាន ១១ កន្លែង និងផ្លូវអមសងខាងប្រវែងសរុបប្រមាណ ២០៨ គីឡូម៉ែត្រ។",
+                q8: "<strong>ចម្លើយពេញ៖</strong> ព្រែកជីកហ្វូណនតេជោ គ្រោងសាងសង់ដោយប្រើរយៈពេលចំនួន ៤ ឆ្នាំ។",
+                q9: "<strong>ចម្លើយពេញ៖</strong> ព្រែកជីកហ្វូណនតេជោ ចាប់ផ្តើមសាងសង់ថ្ងៃទី ៥ ខែសីហា ឆ្នាំ ២០២៤",
+                q10: "<strong>ចម្លើយពេញ៖</strong> ព្រែកជីកហ្វូណនតេជោ មានអត្ថប្រយោជន៍ដូចជា៖ កាត់បន្ថយរយៈពេល ចម្ងាយ និងតម្លៃដឹកជញ្ជូន, បង្កើតតំបន់ពាណិជ្ជកម្ម និងភស្តុភារកម្ម, អភិវឌ្ឍផែរណប, ពង្រីកកសិកម្ម ធារាសាស្ត្រ វារីវប្បកម្ម, គាំទ្រប៉ូលសេដ្ឋកិច្ចទី៤, បង្កើតការងារនៅកំពង់ផែស្វយ័ត, ជំរុញនគរូបនីយកម្ម និងអចលនទ្រព្យ។",
+                q11: "<strong>ចម្លើយពេញ៖</strong> ការបោះឆ្នោតដែលរៀបចំឡើងដោយអាជ្ញាធរអន្តរកាលសហប្រជាជាតិនៅកម្ពុជា (អ៊ុនតាក់) ប្រព្រឹត្តិទៅនៅថ្ងៃទី ២៣ ដល់ ថ្ងៃទី ២៨ ខែមិថុនា ឆ្នាំ ១៩៩៣។",
+                q12: "<strong>ចម្លើយពេញ៖</strong> គិតចាប់ពីឆ្នាំ ១៩៩៣ មកដល់បច្ចុប្បន្ន កម្ពុជាធ្លាប់បោះឆ្នោតជ្រើសតាំងតំណាងរាស្ត្រចំនួន ៧ ដង (គិតត្រឹមឆ្នាំ ២០២៣) គឺនៅឆ្នាំ ១៩៩៣, ១៩៩៨, ២០០៣, ២០០៨, ២០១៣, ២០១៨ និង ២០២៣។",
+                q13: "<strong>ចម្លើយពេញ៖</strong> ការបោះឆ្នោតជ្រើសតាំងតំណាងរាស្ត្រនីតិកាលទី ៧ ប្រព្រឹត្តិទៅនៅថ្ងៃអាទិត្យ ទី ២៣ ខែកក្កដា ឆ្នាំ ២០២៣។",
+                q14: "<strong>ចម្លើយពេញ៖</strong> ការបោះឆ្នោតជ្រើសតាំងតំណាងរាស្ត្រប្រព្រឹត្តិទៅរៀងរាល់ ៥ ឆ្នាំ ម្តង។",
+                q15: "<strong>ចម្លើយពេញ៖</strong> ការបោះឆ្នោតក្រុមប្រឹក្សាឃុំសង្កាត់អាណត្តិទី ៥ ឆ្នាំ ២០២២ ប្រព្រឹត្តិទៅនៅថ្ងៃទី ៥ ខែមិថុនា ឆ្នាំ ២០២២។",
+                q16: "<strong>ចម្លើយពេញ៖</strong> ការបោះឆ្នោតក្រុមប្រឹក្សាឃុំសង្កាត់ប្រព្រឹត្តិទៅរៀងរាល់ ៥ ឆ្នាំ ម្តង។",
+                q17: "<strong>ចម្លើយពេញ៖</strong> ប្រជាពលរដ្ឋមានអាយុចាប់ពី ១៨ ឆ្នាំ ឡើងទៅ ទើបមានសិទ្ធិបោះឆ្នោត។",
+                q18: "<strong>ចម្លើយពេញ៖</strong> អ្នកអាចឈរឈ្មោះឱ្យគេបោះឆ្នោតជ្រើសតាំងជាតំណាងរាស្ត្រ ក្រុមប្រឹក្សារាជធានី ខេត្ត ក្រុង ស្រុក ខណ្ឌ ឃុំ សង្កាត់ បានលុះត្រាមានអាយុចាប់ពី ២៥ ឆ្នាំ ឡើងទៅ។",
+                q19: "<strong>ចម្លើយពេញ៖</strong> អ្នកអាចឈរឈ្មោះឱ្យគេបោះឆ្នោតជ្រើសតាំងជាសមាជិកព្រឹទ្ធសភា បានលុះត្រាមានអាយុចាប់ពី ៤០ ឆ្នាំ ឡើងទៅ។",
+                q20: "<strong>ចម្លើយពេញ៖</strong> ផ្អែកតាមរដ្ឋធម្មនុញ្ញឆ្នាំ ១៩៩៣ ការបោះឆ្នោតនៅកម្ពុជាចែកជា ៤ ប្រភេទគឺ៖ ការបោះឆ្នោតជ្រើសតាំងតំណាងរាស្ត្រ, ជ្រើសរើសក្រុមប្រឹក្សាឃុំ-សង្កាត់, ជ្រើសរើសក្រុមប្រឹក្សារាជធានី-ខេត្ត ក្រុង-ស្រុក-ខណ្ឌ និងជ្រើសរើសសមាជិកព្រឹទ្ធសភា។",
+                q21: "<strong>ចម្លើយពេញ៖</strong> ការបោះឆ្នោតនៅកម្ពុជាចែកជា ២ លក្ខណៈ គឺលក្ខណៈសកល និងលក្ខណៈអសកល។",
+                q22: "<strong>ចម្លើយពេញ៖</strong> ការបោះឆ្នោតជាសកល គឺជាដំណើរការបោះឆ្នោតមួយដែលប្រជាពលរដ្ឋគ្រប់រូបចាប់ពីអាយុ ១៨ ឆ្នាំឡើងទៅ មានសិទ្ធិចូលរួមបោះឆ្នោតដោយមិនប្រកាន់មុខងារ តួនាទី ឬឋានៈអ្វីឡើយ (ឧទាហរណ៍៖ ការបោះឆ្នោតឃុំសង្កាត់ និងជ្រើសតាំងតំណាងរាស្ត្រ)។",
+                q23: "<strong>ចម្លើយពេញ៖</strong> ការបោះឆ្នោតអសកល គឺជាដំណើរការបោះឆ្នោតមួយដែលប្រជាពលរដ្ឋទូទៅមិនអាចចូលរួមបោះឆ្នោតបានទេ គឺចូលរួមបានតែតំណាងប្រជាពលរដ្ឋមួយចំនួនដែលគេបានកំណត់ទុកជាស្រេចប៉ុណ្ណោះ (ឧទាហរណ៍៖ ការបោះឆ្នោតជ្រើសតាំងសមាជិកព្រឹទ្ធសភា)។",
+                q24: "<strong>ចម្លើយពេញ៖</strong> ខេត្តធំជាងគេក្នុងប្រទេសកម្ពុជា គឺ ខេត្តមណ្ឌលគិរី។",
+                q25: "<strong>ចម្លើយពេញ៖</strong> ខេត្តតូចជាងគេក្នុងប្រទេសកម្ពុជា គឺ ខេត្តកែប។",
+                q26: "<strong>ចម្លើយពេញ៖</strong> ខេត្តនៅចំកណ្តាលប្រទេសកម្ពុជា គឺ ខេត្តកំពង់ធំ។",
+                q27: "<strong>ចម្លើយពេញ៖</strong> ខេត្តមានប្រាសាទច្រើនជាងគេក្នុងប្រទេសកម្ពុជា គឺ ខេត្តសៀមរាប។",
+                q28: "<strong>ចម្លើយពេញ៖</strong> ខេត្តដែលមានក្រុង ៣ ក្នុងប្រទេសកម្ពុជា គឺ ខេត្តកណ្តាល (រួមមាន៖ ក្រុងតាខ្មៅ, ក្រុងអរិយក្សត្រ និងក្រុងសំពៅពូន គិតត្រឹមឆ្នាំ ២០២៤)។",
+                q29: "<strong>ចម្លើយពេញ៖</strong> ខេត្តដែលមានព្រំប្រទល់ជាប់ទន្លេសាប គឺ ខេត្តពោធិ៍សាត់, សៀមរាប, បាត់ដំបង, កំពង់ឆ្នាំង និងកំពង់ធំ។",
+                q30: "<strong>ចម្លើយពេញ៖</strong> រាជធានី-ខេត្តដែលទន្លេមេគង្គហូរកាត់ គឺ រាជធានីភ្នំពេញ, ខេត្តកណ្តាល, ព្រៃវែង, កំពង់ចាម, ត្បូងឃ្មុំ, ក្រចេះ និងស្ទឹងត្រែង។",
+
+                q31: "<strong>ចម្លើយពេញ៖</strong> បឹងយក្សឡោមស្ថិតក្នុងខេត្តរតនគិរី ",
+                q32: "<strong>ចម្លើយពេញ៖</strong> មូលដ្ឋានទ័ពខ្មែរក្រហមចុងក្រោយបំផុត គឺស្ថិតនៅអន្លង់វែង ខេត្តឧត្តរមានជ័យ។",
+                q33: "<strong>ចម្លើយពេញ៖</strong> ខេត្តកំពង់ស្ពឺ។",
+                q34: "<strong>ចម្លើយពេញ៖</strong> លោកតាក្រមង៉ុយកើតក្នុងខេត្ត ខេត្តកណ្តាល",
+                q35: "<strong>ចម្លើយពេញ៖</strong> កំពង់ស្ពឺ។",
+                q36: "<strong>ចម្លើយពេញ៖</strong> ខេត្តដែលមានរ៉ែត្បូងច្រើនជាងគេ គឺ ៖  ខេត្តប៉ៃលិន",
+                q37: "<strong>ចម្លើយពេញ៖</strong> យោងតាមទិន្នន័យជំរឿនឆ្នាំ ២០១៩ ចំនួនប្រជាជនច្រើនជាងគេ គឺស្ថិតនៅរាជធានីភ្នំពេញ ដែលមានចំនួន ២,១២៩,៣៧១ នាក់ (ស្មើនឹង ១៣.៩%)",
+                q38: "<strong>ចម្លើយពេញ៖</strong> ខេត្តដែលមានភ្នំខ្ពស់ជាងគេ គឺ ខេត្តកំពង់ស្ពឺ (គឺភ្នំឱរ៉ាល់)។",
+                q39: "<strong>ចម្លើយពេញ៖</strong> ប្រសាទអង្គរវត្តមានកម្ពស់ ៦៥ ម៉ែត្រ។",
+                q40: "<strong>ចម្លើយពេញ៖</strong> ប្រសាទអង្គរវត្តមានក្រឡាផ្ទៃប្រហែល ២០០ ហិចតា។",
+                q41: "<strong>ចម្លើយពេញ៖</strong> ប្រសាទភ្នំបាខែងកសាងក្នុងឆ្នាំ ៩០៧ នៃគ.ស។",
+                q42: "<strong>ចម្លើយពេញ៖</strong> ប្រសាទភ្នំបាខែងមានកម្ពស់ កម្ពស់ ៤៥ ម៉ែត្រ",
+                q43: "<strong>ចម្លើយពេញ៖</strong> ប្រសាទភ្នំបាខែងមាន ៧ ជាន់ ដែលតំណាងឱ្យឋានសួគ៌ ៧ ជាន់របស់ព្រះឥន្ទ នៅក្នុងទេវកថារបស់ព្រហ្មញ្ញសាសនា។",
+                q44: "<strong>ចម្លើយពេញ៖</strong> ប្រសាទភ្នំបាខែងមានកំពូលចំនួន ១០៩។",
+                q45: "<strong>ចម្លើយពេញ៖</strong> ប្រសាទភ្នំបាខែងតំណាងឱ្យ ភ្នំព្រះសុមេរុ។",
+                q46: "<strong>ចម្លើយពេញ៖</strong> ប្រសាទភ្នំបាខែងកសាងឡើងដើម្បីឧទ្ទិសចំពោះ ព្រះឥសូរ។",
+                q47: "<strong>ចម្លើយពេញ៖</strong> ប្រសាទបាពួនកសាងឡើងដោយព្រះបាទសូរ្យវរ្ម័នទី ១ និងសង់បង្ហើយដោយព្រះបាទឧទយាទិត្យវរ្ម័នទី ២។",
+                q48: "<strong>ចម្លើយពេញ៖</strong> ប្រសាទបាពួនកសាងឡើងនៅ ដើមសតវត្សរ៍ទី ១១។",
+                q49: "<strong>ចម្លើយពេញ៖</strong> ប្រសាទបាពួនកសាងឡើងដើម្បីឧទ្ទិសថ្វាយក្នុង ព្រហ្មញ្ញសាសនា។",
+                q50: "<strong>ចម្លើយពេញ៖</strong> ការកសាងក្រុងអង្គរទី ២ (យសោធរបុរៈទី ២) គឺ ប្រសាទបាពួន។",
+                q51: "<strong>ចម្លើយពេញ៖</strong> លោក ឌី ជ្រីហួត ទទួលមរណភាពនៅក្នុង ថ្ងៃទី ៣ មិថុនា ១៩៨៧។",
+                q52: "<strong>ចម្លើយពេញ៖</strong> លោកបណ្ឌិតមហា ឈឹម សុមន៍ កើតក្នុងឆ្នាំ ១៩០៥ នៅឃុំបសែត ស្រុកគងពិសី ខេត្តកំពង់ស្ពឺ។",
+                q53: "<strong>ចម្លើយពេញ៖</strong> ស្នាដៃដ៏ល្បីល្បាញរបស់លោកបណ្ឌិតមហា ឈឹម សុមន៍ គឺលោកបានរៀបរៀងសង្ខេបស្នាដៃរឿង ព្រះវេស្សន្តរ។",
+                q54: "<strong>ចម្លើយពេញ៖</strong> លោកបណ្ឌិតមហា ឈឹម សុមន៍ ទទួលមរណភាពក្នុងឆ្នាំ ១៩៧៥។",
+                q55: "<strong>ចម្លើយពេញ៖</strong> លោក រីម គីន កើតនៅក្នុងថ្ងៃទី ៨ វិច្ឆិកា ឆ្នាំ ១៩១១។",
+                q56: "<strong>ចម្លើយពេញ៖</strong> លោក រីម គីន ទទួលមរណភាពនៅក្នុងឆ្នាំ ១៩៥៩។",
+                q57: "<strong>ចម្លើយពេញ៖</strong> ស្នាដៃដ៏ល្បីល្បាញរបស់លោក រីម គីន គឺ រឿងសូផាត ដែលបាននិពន្ធក្នុងឆ្នាំ ១៩៣៨។",
+                q58: "<strong>ចម្លើយពេញ៖</strong> លោកបណ្ឌិត កេង វ៉ាន់សាក់ កើតក្នុងថ្ងៃទី ១៩ ខែកញ្ញា ឆ្នាំ ១៩២៥។",
+                q59: "<strong>ចម្លើយពេញ៖</strong> លោកបណ្ឌិត កេង វ៉ាន់សាក់ កើតនៅស្រុកកំពង់លែង ខេត្តកំពង់ឆ្នាំង។",
+                q60: "<strong>ចម្លើយពេញ៖</strong> លោកបណ្ឌិត កេង វ៉ាន់សាក់ មានស្នាដៃជាអ្នកបង្កើតពុម្ពអក្សរខ្មែរសម្រាប់ប្រើក្នុងម៉ាស៊ីនអង្គុលីលេខ និងបាននិពន្ធសៀវភៅស្រាវជ្រាវវប្បធម៌ អក្សរសាស្ត្រ រឿងល្ខោន កំណាព្យ និងរឿងខ្លីៗជាច្រើន ដូចជារឿង សាច់មិនបានស៊ីយកឆ្អឹងព្យួរក អន្ទិតគោលោត ចិត្តក្រមុំ គុកកាមកិលេស ជាដើម។",
+                q61: "<strong>ចម្លើយពេញ៖</strong> លោកបណ្ឌិតសាស្ត្រាចារ្យ កេង វ៉ាន់សាក់ បានទទួលមរណភាពនៅថ្ងៃទី ១៨ ខែធ្នូ ឆ្នាំ ២០០៨។",
+                q62: "<strong>ចម្លើយពេញ៖</strong> ស្នាដៃដ៏ល្បីល្បាញរបស់កវីម្ចាស់ស្ទឹងសង្កែ លោក គង្គ ប៊ុនឈឿន គឺ បទចម្រៀងរំដួលដងស្ទឹងសង្កែ និងបទ ស្ពានអូតាគី។",
+                q63: "<strong>ចម្លើយពេញ៖</strong> កវីម្ចាស់ស្ទឹងសង្កែ លោក គង្គ ប៊ុនឈឿន ទទួលមរណភាពនៅថ្ងៃទី ១៧ ខែមេសា ឆ្នាំ ២០១៦ ក្នុងជន្មាយុ ៧៧ ឆ្នាំ។",
+                q64: "<strong>ចម្លើយពេញ៖</strong> កវីម្ចាស់ស្ទឹងសង្កែ លោក គង្គ ប៊ុនឈឿន កើតនៅថ្ងៃទី ១៨ ខែតុលា ឆ្នាំ ១៩៣៩ នៅខេត្តបាត់ដំបង។",
+                q65: "<strong>ចម្លើយពេញ៖</strong> ប្រទេសដែលមានខឿនសេដ្ឋកិច្ចរីកលូតលាស់ខ្លាំង គេហៅថា ប្រទេសអភិវឌ្ឍន៍។",
+                q66: "<strong>ចម្លើយពេញ៖</strong> ប្រទេសដែលអន់ថយផ្នែកសេដ្ឋកិច្ច ហើយខំប្រឹងប្រែងស្ដារលើគ្រប់វិស័យឡើងវិញហៅថា ប្រទេសកំពុងអភិវឌ្ឍន៍។",
+                q67: "<strong>ចម្លើយពេញ៖</strong> ប្រទេសដែលអន់ថយផ្នែកសេដ្ឋកិច្ច ហើយមិនព្រមធ្វើការកែប្រែហៅថា ប្រទេសតតិយលោក (ប្រទេសក្រីក្របំផុត)។",
+                q68: "<strong>ចម្លើយពេញ៖</strong> ច្បាប់ដែលគេប្រកាសឲ្យប្រើក្នុងពេលកំណត់មួយគឺ ច្បាប់លោកិយ។",
+                q69: "<strong>ចម្លើយពេញ៖</strong> ច្បាប់ដែលគេប្រកាសឲ្យប្រើតាមពន្លឺនៃវិចារណញ្ញាណគឺ ច្បាប់ធម្មជាតិ។",
+                q70: "<strong>ចម្លើយពេញ៖</strong> ចាប់ពីឆ្នាំ ១៩៧០ ដល់ ១៩៧៥ ខ្មែរមានទំនោរនយោបាយទៅរកប្រទេសសហរដ្ឋអាមេរិក។",
+                q71: "<strong>ចម្លើយពេញ៖</strong> ពណ៌សម្លៀកបំពាក់-ពណ៌ក្រហម,",
+                q72: "<strong>ចម្លើយពេញ៖</strong> ទង់ជាតិនៃព្រះរាជាណាចក្រកម្ពុជា មានលក្ខណៈសម្គាល់ដោយមាន ៣ ពណ៌។",
+                q73: "<strong>ចម្លើយពេញ៖</strong> ពណ៌ខៀវលើទង់ជាតិ តំណាងឲ្យ សាមគ្គីភាព ភាតរភាព មេត្តាករុណា សន្តិភាព អហិង្សា ស្ថិតក្រោមព្រះរាជកិច្ចដឹកនាំរបស់ព្រះមហាក្សត្រ។",
+                q74: "<strong>ចម្លើយពេញ៖</strong> ពណ៌ក្រហមលើទង់ជាតិ តំណាងឲ្យ ស្មារតីអង់អាចក្លាហាន ពុះពារគ្រប់ឧបសគ្គ ហ៊ានពលីកម្មគ្រប់បែបយ៉ាងដើម្បីជាតិមាតុភូមិ។",
+                q75: "<strong>ចម្លើយពេញ៖</strong> រូបប្រាសាទអង្គរវត្តពណ៌ស តំណាងឲ្យ អរិយធម៌ខ្មែរដ៏រុងរឿងនាសម័យមហានគរ និងតំណាងឲ្យសាសនា ព្រមទាំងសីលធម៌។",
+                q76: "<strong>ចម្លើយពេញ៖</strong> ចម្រៀងជាតិរបស់កម្ពុជាមានឈ្មោះថា «បទនគរាជ» និពន្ធដោយសម្តេចព្រះសង្ឃរាជ ជូន ណាត ចែកចេញជា ៣ វគ្គ (វគ្គ១៖ បួងសួងដល់ទេវតាជួយថែរក្សាព្រះមហាក្សត្រ, វគ្គ២៖ រំលឹកពីប្រាសាទថ្មនិងសម័យមហានគរដ៏រុងរឿង, វគ្គ៣៖ រំលឹកគុណព្រះពុទ្ធសាសនាដែលជួយឲ្យខ្មែរថ្កុំថ្កើង)។",
+                q77: "<strong>ចម្លើយពេញ៖</strong> បាវចនាជាតិរបស់ព្រះរាជាណាចក្រកម្ពុជាគឺ៖ «ជាតិ សាសនា ព្រះមហាក្សត្រ»។",
+                q78: "<strong>ចម្លើយពេញ៖</strong> និមិត្តរូបសត្វនិងរុក្ខជាតិតំណាងកម្ពុជា៖ គោព្រៃ (ចតុប្បាទ), ត្រយ៉ង (បក្ខី), អណ្ដើកហ្លួង (ឧរង្គសត្វ), ត្រីគល់រាំង (មច្ឆជាតិ), ដើមត្នោត (រុក្ខជាតិ), ផ្ការំដួល (បុប្ផាជាតិ), និងចេកពងមាន់ (ផលជាតិ)។",
+                q79: "<strong>ចម្លើយពេញ៖</strong> របៀបសំពះខ្មែរមាន ៥ របៀប៖ ត្រឹមដើមទ្រូង (មិត្តភក្តិ/វ័យស្មើ), ត្រឹមមាត់ (ចាស់ទុំ/ចៅហ្វាយ), ត្រឹមចុងច្រមុះ (ឪពុកម្តាយ/គ្រូ), ត្រឹមចិញ្ចើម (ព្រះសង្ឃ/ស្តេច), និងត្រឹមចិញ្ចើមឡើងទៅ (ទេវតា/បួងសួង)។",
+                q80: "<strong>ចម្លើយពេញ៖</strong> ទិវាសិទ្ធិមនុស្សត្រូវបានប្រកាសជាសកលនៅថ្ងៃទី ១០ ខែធ្នូ ឆ្នាំ ១៩៤៨ ដោយមហាសន្និបាតនៃអង្គការសហប្រជាជាតិ។",
+                q81: "<strong>ចម្លើយពេញ៖</strong> អរិយសច្ចៈ (ការពិតដ៏ខ្ពង់ខ្ពស់) មាន ៤ គឺ៖ ទុក្ខអរិយសច្ចៈ, សមុទយអរិយសច្ចៈ, និរោធអរិយសច្ចៈ និងមគ្គអរិយសច្ចៈ។",
+                q82: "<strong>ចម្លើយពេញ៖</strong> រាជរដ្ឋាភិបាលថ្មីក្រោយការបោះឆ្នោតឆ្នាំ ២០២៣ បានឡើងកាន់តំណែងនៅក្នុងនីតិកាលទី ៧ នៃរដ្ឋសភា។",
+                q83: "<strong>ចម្លើយពេញ៖</strong> អំពើហិង្សាក្នុងគ្រួសារអាចកើតមានឡើងនៅគ្រប់ស្រទាប់វណ្ណៈទាំងអស់ក្នុងសង្គម។",
+                q84: "<strong>ចម្លើយពេញ៖</strong> ការរស់នៅជាមួយគ្នាដោយឲ្យតម្លៃគ្នាទៅវិញទៅមក គោរពសិទ្ធិគ្នា និងរួមរស់ដោយសន្តិភាពហៅថា សីលធម៌សង្គម។",
+                q85: "<strong>ចម្លើយពេញ៖</strong> ការរស់នៅដោយសុខដុមរមនា គ្មានការវាយដំឈ្លោះទាស់ទែងគ្នា ហៅថា ភាតរភាព។",
+                q86: "<strong>ចម្លើយពេញ៖</strong> ការចេះត្រិះរិះជ្រើសរើសគោលដៅពិតប្រាកដរបស់ខ្លួនសម្រាប់អនាគតហៅថា ការសម្រេចចិត្ត។",
+                q87: "<strong>ចម្លើយពេញ៖</strong> ការមានសមត្ថភាពខ្ពស់ក្នុងការធ្វើអ្វីមួយយ៉ាងស្ទាត់ជំនាញពីកំណើតហៅថា ទេពកោសល្យ។",
+                q88: "<strong>ចម្លើយពេញ៖</strong> ការមានគំនិតផ្ដើមធ្វើអ្វីមួយប្លែកៗឲ្យលេចចេញជារូបរាងឡើង ហៅថា គំនិតច្នៃប្រឌិត។",
+                q89: "<strong>ចម្លើយពេញ៖</strong> របបមាតាធិបតេយ្យ គឺសំដៅយកការឱ្យតម្លៃលើស្ត្រីជាធំ ឬជាមាតានៃពិភពលោក។",
+                q90: "<strong>ចម្លើយពេញ៖</strong> គ្រួសារមានសុភមង្គលទៅបាន គឺដោយសារសមាជិកមានការស្រុះស្រួលយល់ចិត្តគ្នា និងមានចំណូលសមរម្យអាចទ្រទ្រង់ជីវភាពបាន។",
+                q91: "<strong>ចម្លើយពេញ៖</strong> ដើមកំណើតនៃអរិយធម៌ខ្មែរ គឺចាប់កំណើតឡើងពីការកសាង និងផ្សំផ្គុំនៃជនជាតិ មន-ខ្មែរ។",
+                q92: "<strong>ចម្លើយពេញ៖</strong> ចម្លាក់បុរាណចែកចេញជា ៣ ប្រភេទគឺ៖ ចម្លាក់លិប (ទាប), ចម្លាក់លៀន (កណ្តាល) និងចម្លាក់លោត (ខ្ពស់)។",
+                q93: "<strong>ចម្លើយពេញ៖</strong> អ្នកដែលមានគំនិតផ្តួចផ្តើមបង្កើតរដ្ឋធម្មនុញ្ញខ្មែរមុនគេ គឺព្រះអង្គម្ចាស់ ស៊ីសុវត្ថិ យុត្តិវង្ស។",
+                q94: "<strong>ចម្លើយពេញ៖</strong> លិខិតបទដ្ឋានគតិយុត្តិដែលចេញដោយព្រះមហាក្សត្រសម្រាប់ប្រកាសឲ្យប្រើប្រាស់ច្បាប់ ក្រោយពីរដ្ឋសភា និងព្រឹទ្ធសភាអនុម័តរួចហៅថា ព្រះរាជក្រម។",
+                q95: "<strong>ចម្លើយពេញ៖</strong> លិខិតបទដ្ឋានគតិយុត្តិដែលចេញដោយព្រះមហាក្សត្រសម្រាប់ការតែងតាំងមន្ត្រីជាន់ខ្ពស់ ឬការងារពិសេសហៅថា ព្រះរាជក្រឹត្យ។",
+                q96: "<strong>ចម្លើយពេញ៖</strong> កងកម្លាំងប្រដាប់អាវុធគឺជាកម្លាំងរបស់ជាតិ ដែលត្រូវរក្សាដាច់ខាតនូវអព្យាក្រឹតភាពខាងនយោបាយ។",
+                q97: "<strong>ចម្លើយពេញ៖</strong> រដ្ឋាភិបាលគឺជា អង្គការនីតិប្រតិបត្តិ ដែលទទួលខុសត្រូវខ្ពស់ក្នុងការដឹកនាំ និងគ្រប់គ្រងប្រទេស។",
+                q98: "<strong>ចម្លើយពេញ៖</strong> ប្រជាពលរដ្ឋខ្មែរគ្រប់រូប គឺមានសិទ្ធិ និងកាតព្វកិច្ចស្មើៗគ្នាចំពោះមុខច្បាប់។",
+                q99: "<strong>ចម្លើយពេញ៖</strong> ព្រះរាជាណាចក្រកម្ពុជាប្រកាន់របបនយោបាយ លទ្ធិប្រជាធិបតេយ្យសេរីពហុបក្ស។",
+                q100: "<strong>ចម្លើយពេញ៖</strong> រដ្ឋធម្មនុញ្ញនៃព្រះរាជាណាចក្រកម្ពុជាបែងចែកអំណាចរដ្ឋជា ៣ គឺ៖ អំណាចនីតិប្បញ្ញត្តិ, អំណាចនីតិប្រតិបត្តិ និងអំណាចតុលាការ។",
+                q101: "<strong>ចម្លើយពេញ៖</strong> ខេត្តក្រុងដែលស្ថិតនៅតំបន់ឆ្នេរ និងសមុទ្រមាន៖ ខេត្តកំពត, កោះកុង, ព្រះសីហនុ និងខេត្តកែប។",
+                q102: "<strong>ចម្លើយពេញ៖</strong> អ្នកដែលមានសមត្ថកិច្ចចេញដីកាសម្រេចឲ្យចាប់ខ្លួន ឬឃុំខ្លួនជនល្មើសជាបណ្តោះអាសន្នគឺ ចៅក្រមស៊ើបសួរ។",
+                q103: "<strong>ចម្លើយពេញ៖</strong> ពាក្យបណ្ដឹងសុំឲ្យពិនិត្យនិងជម្រះឡើងវិញចំពោះសាលក្រមរបស់តុលាការជាន់ទាប ហៅថា បណ្ដឹងឧទ្ធរណ៍។",
+                q104: "<strong>ចម្លើយពេញ៖</strong> ពាក្យបណ្ដឹងទាមទារឲ្យមានការសងការខូចខាតទាំងផ្នែកសម្ភារៈ យុត្តិធម៌ ឬជំងឺចិត្ត ហៅថា បណ្តឹងរដ្ឋប្បវេណី។",
+                q105: "<strong>ចម្លើយពេញ៖</strong> ពាក្យបណ្ដឹងសុំតវ៉ា ឬបដិសេធសេចក្តីសម្រេចរបស់សាលាឧទ្ធរណ៍ទៅកាន់តុលាការកំពូល ហៅថា បណ្តឹងសាទុក្ខ។",
+                q106: "<strong>ចម្លើយពេញ៖</strong> បណ្ដឹងដែលមានគោលបំណងផ្តន្ទាទោសពិន័យជាប្រាក់ និងដាក់ពន្ធនាគារលើជនល្មើស គឺ បណ្ដឹងអាជ្ញា។",
+                q107: "<strong>ចម្លើយពេញ៖</strong> សេចក្តីសម្រេចចុងក្រោយរបស់សាលាជម្រះក្តីជាន់ខ្ពស់ (មានសាលាឧទ្ធរណ៍ និងតុលាការកំពូល) ហៅថា សាលដីកា។",
+                q108: "<strong>ចម្លើយពេញ៖</strong> អាយុអប្បបរមាដែលកុមារអាចចូលធ្វើការងារស្រាលៗបាន ដោយធានាសុខភាព សន្តិសុខ និងសីលធម៌ គឺចាប់ពីអាយុ ១៥ ឆ្នាំឡើងទៅ (ក្រោម ១៥ ឆ្នាំក្នុងលក្ខខណ្ឌតឹងរ៉ឹង)។",
+                q109: "<strong>ចម្លើយពេញ៖</strong> ខេត្តដែលស្ថិតនៅក្នុងតំបន់ខ្ពង់រាប និងភ្នំមាន៖ ខេត្តកំពង់ស្ពឺ, ក្រចេះ, មណ្ឌលគិរី, ព្រះវិហារ, រតនគិរី និងខេត្តស្ទឹងត្រែង។",
+                q110: "<strong>ចម្លើយពេញ៖</strong> យោងតាមទិន្នន័យជំរឿនឆ្នាំ ២០១៩ ចំនួនប្រជាជនច្រើនជាងគេគឺរស់នៅ រាជធានីភ្នំពេញ ដែលមានចំនួន ២,១២៩,៣៧១ នាក់ (១៣.៩%)។",
+                q111: "<strong>ចម្លើយពេញ៖</strong> យោងតាមទិន្នន័យជំរឿនឆ្នាំ ២០១៩ ចំនួនប្រជាជនតិចជាងគេបំផុតគឺស្ថិតនៅ ខេត្តកែប ដែលមានចំនួន ៤១,៧៩៨ នាក់ (០.៣%)។"
+            };
+
+
+            function startTimer() {
+                const timerElement = document.getElementById('timer');
+
+                timerInterval = setInterval(() => {
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        timerElement.innerHTML = "អស់ពេលកំណត់ហើយ!";
+                        timerElement.classList.add('danger');
+                        checkAnswers(false);
+                    } else {
+                        timeLeft--;
+                        let minutes = Math.floor(timeLeft / 60);
+                        let seconds = timeLeft % 60;
+
+                        minutes = minutes < 10 ? '0' + minutes : minutes;
+                        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                        timerElement.innerHTML = `ពេលវេលានៅសល់៖ ${minutes}:${seconds}`;
+
+                        if (timeLeft <= 30) {
+                            timerElement.classList.add('danger');
+                        }
+                    }
+                }, 1000);
+            }
+
+            function checkAnswers(isManualClick) {
+                if (isSubmitted) return;
+                isSubmitted = true;
+
+                clearInterval(timerInterval);
+
+                document.getElementById('submitBtn').disabled = true;
+                document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
+
+                const correctAnswers = {
+                    q1: 'B', q2: 'B', q3: 'A', q4: 'B', q5: 'B',
+                    q6: 'A', q7: 'A', q8: 'B', q9: 'B', q10: 'A',
+                    q11: 'B', q12: 'C', q13: 'A', q14: 'B', q15: 'A',
+                    q16: 'C', q17: 'B', q18: 'B', q19: 'C', q20: 'B',
+                    q21: 'A', q22: 'A', q23: 'A', q24: 'A', q25: 'B',
+                    q26: 'A', q27: 'B', q28: 'C', q29: 'A', q30: 'B',
+                    q31: 'B', q32: 'B', q33: 'A', q34: 'B', q35: 'B',
+                    q36: 'A', q37: 'B', q38: 'B', q39: 'B', q40: 'A',
+                    q41: 'B', q42: 'B', q43: 'B', q44: 'C', q45: 'A',
+                    q46: 'B', q47: 'C', q48: 'A', q49: 'B', q50: 'B',
+
+
+                    q51: 'A', q52: 'B', q53: 'A', q54: 'B', q55: 'A',
+                    q56: 'B', q57: 'C', q58: 'A', q59: 'B', q60: 'A',
+                    q61: 'B', q62: 'A', q63: 'A', q64: 'B', q65: 'A',
+                    q66: 'B', q67: 'C', q68: 'A', q69: 'B', q70: 'B',
+                    q71: 'B', q72: 'B', q73: 'A', q74: 'B', q75: 'A',
+                    q76: 'B', q77: 'B', q78: 'C', q79: 'B', q80: 'A',
+                    q81: 'B', q82: 'B', q83: 'C', q84: 'A', q85: 'B',
+                    q86: 'A', q87: 'B', q88: 'A', q89: 'B', q90: 'B',
+                    q91: 'A', q92: 'B', q93: 'A', q94: 'B', q95: 'C',
+                    q96: 'B', q97: 'C', q98: 'A', q99: 'B', q100: 'B',
+
+                    q101: 'B', q102: 'C', q103: 'A', q104: 'B', q105: 'A', q106: 'B',
+                    q107: 'B', q108: 'B', q109: 'A', q110: 'C', q111: 'A'
+                };
+
+                let score = 0;
+                let totalQuestions = Object.keys(correctAnswers).length;
+
+                for (let key in correctAnswers) {
+                    const correctAnswer = correctAnswers[key];
+                    const selectedInput = document.querySelector(`input[name="${key}"]:checked`);
+                    const allInputs = document.querySelectorAll(`input[name="${key}"]`);
+
+                    allInputs.forEach(input => {
+                        if (input.value === correctAnswer) {
+                            input.parentElement.classList.add('correct');
+                        }
+                    });
+
+                    if (selectedInput) {
+                        if (selectedInput.value === correctAnswer) {
+                            score++;
+                        } else {
+                            selectedInput.parentElement.classList.add('incorrect');
+                        }
+                    }
+
+                    const expDiv = document.getElementById(`exp-${key}`);
+                    if (expDiv && fullAnswersText[key]) {
+                        expDiv.innerHTML = fullAnswersText[key];
+                        expDiv.style.display = "block";
+                    }
+                }
+
+                let percentage = Math.round((score / totalQuestions) * 100);
+                const resultDiv = document.getElementById('result');
+                resultDiv.style.display = "block";
+
+                let statusText = isManualClick ? "ការប្រលងត្រូវបានបញ្ចប់ដោយជោគជ័យ!" : "អស់ពេលកំណត់ធ្វើកិច្ចការហើយ!";
+                resultDiv.innerHTML = `${statusText} <br> អ្នកទទួលបានពិន្ទុ៖ <strong>${score} / ${totalQuestions}</strong> សំណួរ (សមមូលនឹង <strong>${percentage}%</strong>)<br><small style="color:#666; font-size:1rem;">សូមអូសទៅមើលខាងលើវិញ ដើម្បីអានចម្លើយលម្អិតពេញលេញនៃសំណួរនីមួយៗ។</small>`;
+
+                resultDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            startTimer();
+    </script>
+</body>
+
+</html>
